@@ -6,6 +6,7 @@ const LetterInput = React.forwardRef<HTMLInputElement, LetterInputProps>((props,
   const {
     value,
     onChange,
+    onKeyUp,
     status,
   } = props;
 
@@ -15,7 +16,8 @@ const LetterInput = React.forwardRef<HTMLInputElement, LetterInputProps>((props,
       className={`letter-input letter-input--${status}`}
       type="text"
       value={value}
-      onChange={({ target: { value } }) => onChange(value)}
+      onChange={({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => onChange(value)}
+      onKeyUp={({ key }: React.KeyboardEvent<HTMLInputElement>) => onKeyUp(key)}
     />
   );
 });

@@ -8,6 +8,7 @@ import { LetterInputProps } from '../../types';
 const basicProps: LetterInputProps = {
   value: '',
   onChange: jest.fn(),
+  onKeyUp: jest.fn(),
   status: 'empty',
 };
 

@@ -8,5 +8,6 @@ export interface Letter {
 export interface LetterInputProps {
   value: string
   onChange: (value: string) => void
+  onKeyUp: (key: string) => void
   status: InputStatus
 }

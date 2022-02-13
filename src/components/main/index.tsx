@@ -14,6 +14,7 @@ const getInitialInputList: Letter[] = word
 
 const Main = (): JSX.Element => {
   const [inputList, setInputList] = useState<Letter[]>(getInitialInputList);
+  // const [lastPressedKeyIsBackspace, setlastPressedKeyIsBackspace] = useState(false);
   const inputRefs = useRef<HTMLInputElement[]>([]);
 
   useEffect(() => {
@@ -29,7 +30,7 @@ const Main = (): JSX.Element => {
     }
   }, [inputList]);
 
-  const handleOnChange = (newValue: string, index: number): void => {
+  const updateValue = (newValue: string, index: number): void => {
     const currentInputList: Letter[] = [...inputList];
     const newTargetInput: Letter = {
       ...currentInputList[index],
@@ -41,6 +42,14 @@ const Main = (): JSX.Element => {
     setInputList(currentInputList);
   };
 
+  const handleOnKeyUp = (key: string, index: number): void => {
+    const lastPressedKeyIsBackspace: boolean = key === 'Backspace';
+
+    if (lastPressedKeyIsBackspace && index !== 0) {
+      updateValue('', index - 1);
+    }
+  };
+
   return (
     <main className="main">
       <section className="main__input-list-container">
@@ -50,7 +59,8 @@ const Main = (): JSX.Element => {
               key={nanoid()}
               value={letter.value}
               status={letter.status}
-              onChange={newValue => handleOnChange(newValue, index)}
+              onChange={newValue => updateValue(newValue, index)}
+              onKeyUp={key => handleOnKeyUp(key, index)}
               ref={input => {
                 if (input) inputRefs.current[index] = input;
               }}
