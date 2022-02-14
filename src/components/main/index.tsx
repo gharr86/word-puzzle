@@ -5,7 +5,7 @@ import LetterInput from '../letterInput';
 
 import { Letter, GameOver, GuessLetter } from '../../types';
 
-import { getInitialInputList, getValues, getGuess } from './utils';
+import { getInitialInputList, getValues, getGuess, arrayValuesAreEqual } from './utils';
 
 const word: string = 'PATAS';
 
@@ -28,13 +28,13 @@ const Main = (): JSX.Element => {
       inputRefs.current[nextEmptyValue].focus();
     } else {
       const wordArray: string[] = word.split('');
-      const guess = getGuess(guessArray, wordArray);
-      const guessIsCorrect: boolean = guessArray
-        .every((letter: string, index: number): boolean => wordArray[index] === letter);
-        
-      const currentGuessList: GuessLetter[][] = [...guessList];
-      currentGuessList.push(guess);
-      setGuessList(currentGuessList);
+      const guess: GuessLetter[] = getGuess(guessArray, wordArray);
+      const guessIsCorrect: boolean = arrayValuesAreEqual(guessArray, wordArray);
+
+      setGuessList((prevGuessList: GuessLetter[][]) => ([
+        ...prevGuessList,
+        guess,
+      ]));
 
       if (guessIsCorrect) return setGameIsOver({ win: true });
 
