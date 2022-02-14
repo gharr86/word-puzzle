@@ -9,7 +9,6 @@ const basicProps: LetterInputProps = {
   value: '',
   onChange: jest.fn(),
   onKeyUp: jest.fn(),
-  status: 'empty',
 };
 
 const renderLetterInput = (newProps: {} = {}): RenderResult => {

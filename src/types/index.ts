@@ -1,13 +1,20 @@
-type InputStatus = 'correct' | 'wrong-position' | 'incorrect' | 'empty'
+export type GuessStatus = 'correct' | 'wrong-position' | 'incorrect'
 
 export interface Letter {
   value: string
-  status: InputStatus
+}
+
+export interface GuessLetter {
+  value: string
+  status: GuessStatus
 }
 
 export interface LetterInputProps {
   value: string
   onChange: (value: string) => void
   onKeyUp: (key: string) => void
-  status: InputStatus
+}
+
+export interface GameOver {
+  win: boolean
 }

@@ -3,18 +3,17 @@ import { nanoid } from 'nanoid';
 
 import LetterInput from '../letterInput';
 
-import { Letter } from '../../types';
+import { Letter, GameOver, GuessLetter } from '../../types';
 
-const word: string = 'GATA';
-const emptyInput: Letter = { value: '', status: 'empty' };
+import { getInitialInputList, getValues, getGuess } from './utils';
 
-const getInitialInputList: Letter[] = word
-  .split('')
-  .map((): Letter => emptyInput);
+const word: string = 'PATAS';
 
 const Main = (): JSX.Element => {
-  const [inputList, setInputList] = useState<Letter[]>(getInitialInputList);
-  // const [lastPressedKeyIsBackspace, setlastPressedKeyIsBackspace] = useState(false);
+  const [inputList, setInputList] = useState<Letter[]>(getInitialInputList(word));
+  const [gameIsOver, setGameIsOver] = useState<GameOver | null>(null);
+  const [guessList, setGuessList] = useState<GuessLetter[][]>([]);
+
   const inputRefs = useRef<HTMLInputElement[]>([]);
 
   useEffect(() => {
@@ -22,11 +21,24 @@ const Main = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    const currentValues: string[] = inputList.map(({ value }): string => value);
-    const nextEmptyValue: number = currentValues.findIndex((value): boolean => value.length === 0);
+    const guessArray: string[] = getValues(inputList);
+    const nextEmptyValue: number = guessArray.findIndex((value): boolean => value.length === 0);
 
     if (nextEmptyValue !== -1) {
       inputRefs.current[nextEmptyValue].focus();
+    } else {
+      const wordArray: string[] = word.split('');
+      const guess = getGuess(guessArray, wordArray);
+      const guessIsCorrect: boolean = guessArray
+        .every((letter: string, index: number): boolean => wordArray[index] === letter);
+        
+      const currentGuessList: GuessLetter[][] = [...guessList];
+      currentGuessList.push(guess);
+      setGuessList(currentGuessList);
+
+      if (guessIsCorrect) return setGameIsOver({ win: true });
+
+      setInputList(getInitialInputList(word));
     }
   }, [inputList]);
 
@@ -43,9 +55,7 @@ const Main = (): JSX.Element => {
   };
 
   const handleOnKeyUp = (key: string, index: number): void => {
-    const lastPressedKeyIsBackspace: boolean = key === 'Backspace';
-
-    if (lastPressedKeyIsBackspace && index !== 0) {
+    if (key === 'Backspace' && index !== 0) {
       updateValue('', index - 1);
     }
   };
@@ -58,7 +68,6 @@ const Main = (): JSX.Element => {
             <LetterInput
               key={nanoid()}
               value={letter.value}
-              status={letter.status}
               onChange={newValue => updateValue(newValue, index)}
               onKeyUp={key => handleOnKeyUp(key, index)}
               ref={input => {
