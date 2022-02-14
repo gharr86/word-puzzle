@@ -1,0 +1,15 @@
+.guess-word {
+  @include display-flex(flex-start);
+  gap: 3px;
+
+  &__letter {
+    width: 30px;
+    height: 30px;
+    border-radius: 3px;
+    @include display-flex(center);
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 19px;
+    color: #FFF;
+  }
+}

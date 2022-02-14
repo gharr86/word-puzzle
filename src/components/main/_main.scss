@@ -1,1 +1,18 @@
-@import '../letterInput/letterInput'
+@import '../letterInput/letterInput';
+@import '../guessWord/guessWord';
+
+.main {
+  min-height: 100vh;
+  @include display-flex(flex-start, center, column nowrap);
+  padding: 2em 0;
+
+  &__input-list-container {
+    margin-bottom: 20px;
+  }
+
+  &__guess-list-container {
+    .guess-word {
+      margin-bottom: 5px;
+    }
+  }
+}

@@ -18,3 +18,7 @@ export interface LetterInputProps {
 export interface GameOver {
   win: boolean
 }
+
+export interface GuessWordProps {
+  letters: GuessLetter[]
+}
