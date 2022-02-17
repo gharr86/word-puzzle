@@ -31,32 +31,22 @@ const getOccurrenceIndexes = (
   return letterOccurrenceIndexes;
 };
 
-const letterAlreadyAppeared = (
-  word: string[],
-  currentIndex: number,
-  letterToCheck: string
-): boolean => (
-  word
-    .slice(0, currentIndex)
-    .some((letter: string) => letter === letterToCheck)
-);
-
 export const getGuess = (
   guessValuesArray: string[],
   wordArray: string[],
 ) => guessValuesArray.map((letter: string, index: number): GuessLetter => {
   const letterOccurrencesInWord: number[] = getOccurrenceIndexes(wordArray, letter);
   const letterIsInWord: boolean = Boolean(letterOccurrencesInWord.length);
-  const letterIsInCorrectPosition = wordArray.indexOf(letter) === index;
 
   let status: GuessStatus = 'incorrect';
 
   if (letterIsInWord) {
+    const letterIsInCorrectPosition: boolean = letterOccurrencesInWord.includes(index);
+
     if (letterIsInCorrectPosition) {
       status = 'correct';
     } else  {
       const moreThanOneOccurrenceInWord: boolean = letterOccurrencesInWord.length > 1;
-      const letterAlreadyAppearedInGuess: boolean = letterAlreadyAppeared(guessValuesArray, index, letter);
       
       if (moreThanOneOccurrenceInWord) {
         const letterOccurrencesInGuessUntilNow: number[] = getOccurrenceIndexes(guessValuesArray, letter, index);
@@ -66,10 +56,14 @@ export const getGuess = (
         } else {
           status = 'incorrect';
         }
-      } else if (letterAlreadyAppearedInGuess) {
-        status = 'incorrect';
       } else {
-        status = 'wrong-position';
+        const letterOccurrencesInGuess: number[] = getOccurrenceIndexes(guessValuesArray, letter);
+
+        if (letterOccurrencesInGuess.length > 1) {
+          status = 'incorrect';
+        } else {
+          status = 'wrong-position';
+        }
       }
     }
   }
