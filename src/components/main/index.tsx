@@ -8,7 +8,7 @@ import { Letter, GameOver, GuessLetter } from '../../types';
 
 import { getInitialInputList, getValues, getGuess, arrayValuesAreEqual } from './utils';
 
-const word: string = 'ABRIGO';
+const word: string = 'ABRIGA';
 
 const Main = (): JSX.Element => {
   const [inputList, setInputList] = useState<Letter[]>(getInitialInputList(word));
