@@ -1,4 +1,4 @@
-import { Letter, GuessStatus, GuessLetter } from '../../types';
+import { Letter, GuessStatus, GuessLetter } from '../../../types';
 
 export const arrayValuesAreEqual = (arr1: string[], arr2: string[]): boolean => (
   arr1.every((letter: string, index: number): boolean => arr2[index] === letter)
