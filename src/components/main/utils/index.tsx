@@ -50,20 +50,16 @@ export const getGuess = (
       
       if (moreThanOneOccurrenceInWord) {
         const letterOccurrencesInGuessUntilNow: number[] = getOccurrenceIndexes(guessValuesArray, letter, index);
-
-        if (letterOccurrencesInGuessUntilNow.length <= letterOccurrencesInWord.length) {
-          status = 'wrong-position';
-        } else {
-          status = 'incorrect';
-        }
+        
+        status = letterOccurrencesInGuessUntilNow.length <= letterOccurrencesInWord.length
+          ? 'wrong-position'
+          : 'incorrect';
       } else {
         const letterOccurrencesInGuess: number[] = getOccurrenceIndexes(guessValuesArray, letter);
 
-        if (letterOccurrencesInGuess.length > 1) {
-          status = 'incorrect';
-        } else {
-          status = 'wrong-position';
-        }
+        status = letterOccurrencesInGuess.length > 1
+          ? 'incorrect'
+          : 'wrong-position';
       }
     }
   }

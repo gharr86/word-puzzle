@@ -9,7 +9,7 @@ import { Letter, GameOver, GuessLetter } from '../../types';
 
 import { getInitialInputList, getValues, getGuess, arrayValuesAreEqual } from './utils';
 
-const word: string = 'OJOTA';
+const word: string = 'VIAJE';
 
 const Main = (): JSX.Element => {
   const [inputList, setInputList] = useState<Letter[]>(getInitialInputList(word));
@@ -45,15 +45,19 @@ const Main = (): JSX.Element => {
   }, [inputList]);
 
   const updateValue = (newValue: string, index: number): void => {
-    const currentInputList: Letter[] = [...inputList];
-    const newTargetInput: Letter = {
-      ...currentInputList[index],
-      value: newValue.toUpperCase(),
-    };
+    const pattern: RegExp = new RegExp(/^[a-zA-Z]*$/g);
 
-    currentInputList[index] = newTargetInput;
-
-    setInputList(currentInputList);
+    if (pattern.test(newValue)) {
+      const currentInputList: Letter[] = [...inputList];
+      const newTargetInput: Letter = {
+        ...currentInputList[index],
+        value: newValue.toUpperCase(),
+      };
+  
+      currentInputList[index] = newTargetInput;
+  
+      setInputList(currentInputList);
+    }
   };
 
   const handleOnKeyUp = (key: string, index: number): void => {
@@ -78,7 +82,7 @@ const Main = (): JSX.Element => {
     const guessNumber: string = `${index + 1}.`;
 
     return (
-      <div className="guess-word-container">
+      <div className="guess-word-container" key={nanoid()}>
         <span className="guess-word-container__guess-number">{guessNumber}</span>
         <GuessWord key={nanoid()} letters={guessWordArray} />
       </div>
