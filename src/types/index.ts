@@ -1,4 +1,4 @@
-export type GuessStatus = 'correct' | 'wrong-position' | 'incorrect'
+export type GuessStatus = 'correct' | 'wrong-position' | 'incorrect' | 'none'
 
 export interface Letter {
   value: string
@@ -21,4 +21,8 @@ export interface GameOver {
 
 export interface GuessWordProps {
   letters: GuessLetter[]
+}
+
+export interface AlphabetProps {
+  guessWordsList: GuessLetter[][]
 }

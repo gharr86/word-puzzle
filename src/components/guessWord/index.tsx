@@ -1,20 +1,9 @@
 import React, { ReactElement } from 'react';
 import { nanoid } from 'nanoid';
 
-import { GuessStatus, GuessLetter, GuessWordProps } from '../../types';
+import { GuessLetter, GuessWordProps } from '../../types';
 
-const getBackgroundColor = (status: GuessStatus): string => {
-  switch (status) {
-    case 'correct':
-      return '#0b8c34';
-    case 'wrong-position':
-      return '#946f00';
-    case 'incorrect':
-      return '#5e5e5e';
-    default:
-      return '';
-  }
-};
+import { getBackgroundColor } from '../../utils';
 
 const GuessWord = ({ letters }: GuessWordProps): JSX.Element => {
   return (

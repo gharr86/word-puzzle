@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid';
 
 import LetterInput from '../letterInput';
 import GuessWord from '../guessWord';
+import Alphabet from '../alphabet';
 
 import { Letter, GameOver, GuessLetter } from '../../types';
 
@@ -73,17 +74,29 @@ const Main = (): JSX.Element => {
     />
   ));
 
-  const renderGuessList: JSX.Element[] = guessList.map((guessWordArray: GuessLetter[]): ReactElement => (
-    <GuessWord key={nanoid()} letters={guessWordArray} />
-  ));
+  const renderGuessList: JSX.Element[] = guessList.map((guessWordArray: GuessLetter[], index: number): ReactElement => {
+    const guessNumber: string = `${index + 1}.`;
+
+    return (
+      <div className="guess-word-container">
+        <span className="guess-word-container__guess-number">{guessNumber}</span>
+        <GuessWord key={nanoid()} letters={guessWordArray} />
+      </div>
+    );
+  });
 
   return (
     <main className="main">
       <section className="main__input-list-container">
         {renderInputList}
       </section>
-      <section className="main__guess-list-container">
-        {renderGuessList}
+      <section className="main__guess-container">
+        <div className="main__guess-container__guess-list">
+          {renderGuessList}
+        </div>
+        <div className="main__guess-container__alphabet">
+          <Alphabet guessWordsList={guessList} />
+        </div>
       </section>
     </main>
   );
