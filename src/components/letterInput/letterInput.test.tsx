@@ -29,8 +29,17 @@ describe('<LetterInput />', () => {
     const newValue: string = 'abc';
     renderLetterInput();
 
-    fireEvent.change(screen.getByRole('input'), { target: { value: newValue } });
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: newValue } });
 
     expect(basicProps.onChange).toHaveBeenCalledWith(newValue);
+  });
+
+  test('when a key is released, onKeyUp prop is called', () => {
+    const releasedKey: string = 'Backspace';
+    renderLetterInput();
+
+    fireEvent.keyUp(screen.getByRole('textbox'), { key: releasedKey });
+
+    expect(basicProps.onKeyUp).toHaveBeenCalledWith(releasedKey);
   });
 });
