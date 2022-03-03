@@ -15,13 +15,13 @@ export const getValues = (inputList: Letter[]): string[] => inputList.map(({ val
 const getOccurrenceIndexes = (
   word: string[],
   letter: string,
-  currentIndex: number | null = null
+  indexCut: number | null = null
 ): number[] => {
   const letterOccurrenceIndexes: number[] = [];
   let wordArray: string[] = [...word];
 
-  if (typeof currentIndex === 'number') {
-    wordArray = word.slice(0, currentIndex + 1);
+  if (typeof indexCut === 'number') {
+    wordArray = word.slice(0, indexCut + 1);
   }
 
   wordArray.forEach((wordLetter: string, wordLetterIndex: number): void => {

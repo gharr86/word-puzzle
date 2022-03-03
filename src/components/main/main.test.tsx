@@ -32,7 +32,7 @@ describe('<Main />', () => {
 
   test('when a non-letter value is entered, input is not changed', () => {
     renderMain();
-    const firstInput = screen.getAllByRole('textbox')[0];
+    const firstInput: HTMLElement = screen.getAllByRole('textbox')[0];
 
     fireEvent.change(firstInput, fakeChangeEvent('5'));
 
