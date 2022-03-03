@@ -1,13 +1,15 @@
 import { GuessStatus } from '../types';
 
+import { correctColor, wrongPositionColor, incorrectColor } from '../constants';
+
 export const getBackgroundColor = (status: GuessStatus): string => {
   switch (status) {
     case 'correct':
-      return '#0b8c34';
+      return correctColor;
     case 'wrong-position':
-      return '#946f00';
+      return wrongPositionColor;
     case 'incorrect':
-      return '#5e5e5e';
+      return incorrectColor;
     default:
       return '';
   }

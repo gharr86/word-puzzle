@@ -22,6 +22,21 @@ const Main = (): JSX.Element => {
     inputRefs.current[0]?.focus();
   }, []);
 
+  const submitWord = (guessArray: string[]): void => {
+    const wordArray: string[] = word.split('');
+    const guessObj: GuessLetter[] = getGuess(guessArray, wordArray);
+    const guessIsCorrect: boolean = arrayValuesAreEqual(guessArray, wordArray);
+
+    setGuessList((prevGuessList: GuessLetter[][]) => ([
+      ...prevGuessList,
+      guessObj,
+    ]));
+
+    if (guessIsCorrect) return setGameIsOver({ win: true });
+
+    setInputList(getInitialInputList(word));
+  };
+
   useEffect(() => {
     const guessArray: string[] = getValues(inputList);
     const nextEmptyIndex: number = guessArray.findIndex((value): boolean => value.length === 0);
@@ -29,18 +44,7 @@ const Main = (): JSX.Element => {
     if (nextEmptyIndex !== -1) {
       inputRefs.current[nextEmptyIndex].focus();
     } else {
-      const wordArray: string[] = word.split('');
-      const guessObj: GuessLetter[] = getGuess(guessArray, wordArray);
-      const guessIsCorrect: boolean = arrayValuesAreEqual(guessArray, wordArray);
-
-      setGuessList((prevGuessList: GuessLetter[][]) => ([
-        ...prevGuessList,
-        guessObj,
-      ]));
-
-      if (guessIsCorrect) return setGameIsOver({ win: true });
-
-      setInputList(getInitialInputList(word));
+      submitWord(guessArray);
     }
   }, [inputList]);
 
