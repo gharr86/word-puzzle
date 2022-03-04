@@ -32,12 +32,12 @@ describe('getToDoList', () => {
     test('when word_length param is not received, 200 status is set and data is sent', () => {
       mockGetData.mockReturnValueOnce(mockWordList);
   
-      const mockReq: Partial<Request> = {};
+      const mockReq: Partial<Request> = { query: {} };
   
       getWord(mockReq as Request, mockRes as Response);
   
       expect(mockRes.status).toHaveBeenCalledWith(200);
-      expect(mockRes.json).toHaveBeenCalledWith(mockWordList);
+      expect(mockRes.send).toHaveBeenCalledWith(mockWordList);
     });
 
     test('when word_length param is received, 200 status is set and random word is sent', () => {
@@ -48,11 +48,11 @@ describe('getToDoList', () => {
       getWord(mockReq as Request, mockRes as Response);
   
       expect(mockRes.status).toHaveBeenCalledWith(200);
-      expect(mockRes.json).toHaveBeenCalledWith(mockWordList[0]);
+      expect(mockRes.send).toHaveBeenCalledWith(mockWordList[0]);
     });
 
     test('when word_length param is not ok, 400 status is set and error message is sent', () => {
-      mockGetData.mockReturnValueOnce(undefined);
+      mockGetData.mockReturnValueOnce([]);
   
       const mockReq: Partial<Request> = { query: { word_length: 'abc' } };
   
@@ -64,9 +64,9 @@ describe('getToDoList', () => {
   });
 
   test('when data is not fetched, 500 status is set and error message is sent', () => {
-    mockGetData.mockReturnValueOnce(undefined);
+    mockGetData.mockReturnValueOnce([]);
 
-    const mockReq: Partial<Request> = {};
+    const mockReq: Partial<Request> = { query: { word_length: '5' } };
 
     getWord(mockReq as Request, mockRes as Response);
 

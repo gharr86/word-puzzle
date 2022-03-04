@@ -4,12 +4,14 @@ import { getData } from '../../data';
 import { ERROR_MESSAGE, BAD_REQUEST_MESSAGE } from '../../constants';
 
 export const getWord = (req: Request, res: Response): Response<string> => {
+  console.log(req)
   const data = getData();
 
-  if (data) {
+  if (data && Boolean(data.length)) {
     const { query: { word_length } } = req;
 
-    const wordLengthParamIsOk: boolean = word_length?.length > 0 && !Number.isNaN(Number(word_length));
+    const wordLengthIsReceived: boolean = Boolean(word_length?.length);
+    const wordLengthParamIsOk: boolean = wordLengthIsReceived && !Number.isNaN(Number(word_length));
 
     if (!word_length) return res.status(200).send(data);
     else if (wordLengthParamIsOk) {
