@@ -4,8 +4,9 @@ import { nanoid } from 'nanoid';
 import LetterInput from '../letterInput';
 import GuessWord from '../guessWord';
 import Alphabet from '../alphabet';
+import GameOverPrompt from '../gameOverPrompt';
 
-import { Letter, GameOver, GuessLetter } from '../../types';
+import { Letter, GuessLetter } from '../../types';
 
 import { getInitialInputList, getValues, getGuess, arrayValuesAreEqual } from './utils';
 
@@ -13,8 +14,9 @@ const word: string = 'VIAJE';
 
 const Main = (): JSX.Element => {
   const [inputList, setInputList] = useState<Letter[]>(getInitialInputList(word));
-  const [gameIsOver, setGameIsOver] = useState<GameOver | null>(null);
   const [guessList, setGuessList] = useState<GuessLetter[][]>([]);
+  const [didWin, setDidWin] = useState<boolean>(false);
+  const [showGameOverPrompt, setShowGameOverPrompt] = useState<boolean>(false);
 
   const inputRefs = useRef<HTMLInputElement[]>([]);
 
@@ -32,7 +34,17 @@ const Main = (): JSX.Element => {
       guessObj,
     ]));
 
-    if (guessIsCorrect) return setGameIsOver({ win: true });
+    if (guessIsCorrect) {
+      setDidWin(true);
+      setShowGameOverPrompt(true);
+
+      return;
+    } else if (guessList.length > 5) {
+      setDidWin(false);
+      setShowGameOverPrompt(true);
+
+      return;
+    }
 
     setInputList(getInitialInputList(word));
   };
@@ -46,7 +58,7 @@ const Main = (): JSX.Element => {
     } else {
       submitWord(guessArray);
     }
-  }, [inputList]);
+  }, [inputList]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const updateValue = (newValue: string, index: number): void => {
     const pattern: RegExp = new RegExp(/^[a-zA-Z]*$/g);
@@ -94,19 +106,31 @@ const Main = (): JSX.Element => {
   });
 
   return (
-    <main className="main">
-      <section className="main__input-list-container">
-        {renderInputList}
-      </section>
-      <section className="main__guess-container">
-        <div className="main__guess-container__guess-list">
-          {renderGuessList}
-        </div>
-        <div className="main__guess-container__alphabet">
-          <Alphabet guessWordsList={guessList} />
-        </div>
-      </section>
-    </main>
+    <>
+      <main className="main">
+        <section className="main__input-list-container">
+          {renderInputList}
+        </section>
+        <section className="main__guess-container">
+          <div className="main__guess-container__guess-list">
+            {renderGuessList}
+          </div>
+          <div className="main__guess-container__alphabet">
+            <Alphabet guessWordsList={guessList} />
+          </div>
+        </section>
+      </main>
+      {
+        showGameOverPrompt
+        && (
+          <GameOverPrompt
+            didWin={didWin}
+            word={word}
+            onClickOutside={() => setShowGameOverPrompt(false)}
+          />
+        )
+      }
+    </>
   );
 }
 

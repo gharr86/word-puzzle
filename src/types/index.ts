@@ -15,14 +15,16 @@ export interface LetterInputProps {
   onKeyUp: (key: string) => void
 }
 
-export interface GameOver {
-  win: boolean
-}
-
 export interface GuessWordProps {
   letters: GuessLetter[]
 }
 
 export interface AlphabetProps {
   guessWordsList: GuessLetter[][]
+}
+
+export interface GameOverPromptProps {
+  onClickOutside: () => void
+  word: string
+  didWin: boolean
 }
