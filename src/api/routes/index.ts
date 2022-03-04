@@ -1,8 +1,8 @@
 import express, { Router } from 'express';
-// import routers
+import wordsRouter from './words';
 
 const router: Router = express.Router();
 
-// Mount routers
+router.use('/words', wordsRouter);
 
 export default router;
