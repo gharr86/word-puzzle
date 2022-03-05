@@ -28,3 +28,7 @@ export interface GameOverPromptProps {
   word: string
   didWin: boolean
 }
+
+export interface GameProps {
+  word: string
+}
