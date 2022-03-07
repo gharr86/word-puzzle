@@ -10,6 +10,10 @@ class ApiService {
   static getWord(word_length: number): Promise<AxiosResponse> {
     return request.get('/words', { params: { word_length } });
   }
+
+  static checkWord(word: string): Promise<AxiosResponse> {
+    return request.post('/words', { word });
+  }
 }
 
 export default ApiService;

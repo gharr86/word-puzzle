@@ -1,22 +1,6 @@
 import { Request, Response } from 'express';
 
 import { getWord } from './controller';
-
-import { getData } from '../../data';
-import { ERROR_MESSAGE, BAD_REQUEST_MESSAGE } from '../../constants';
-
-jest.mock('../../data', () => {
-  const originalModule = jest.requireActual('../../data');
-
-  return {
-    ...originalModule,
-    getData: jest.fn(),
-  };
-});
-
-const mockGetData = getData as jest.MockedFunction<typeof getData>;
-
-const mockWordList: string[] = ['viaje', 'sin'];
 let mockRes: Partial<Response>;
 
 beforeEach(() => {
@@ -27,50 +11,40 @@ beforeEach(() => {
   };
 });
 
-describe('getToDoList', () => {
-  describe('when data is fetched', () => {
-    test('when word_length param is not received, 200 status is set and data is sent', () => {
-      mockGetData.mockReturnValueOnce(mockWordList);
-  
-      const mockReq: Partial<Request> = { query: {} };
-  
-      getWord(mockReq as Request, mockRes as Response);
-  
-      expect(mockRes.status).toHaveBeenCalledWith(200);
-      expect(mockRes.send).toHaveBeenCalledWith(mockWordList);
-    });
-
-    test('when word_length param is received, 200 status is set and random word is sent', () => {
-      mockGetData.mockReturnValueOnce(mockWordList);
-  
-      const mockReq: Partial<Request> = { query: { word_length: '5' } };
-  
-      getWord(mockReq as Request, mockRes as Response);
-  
-      expect(mockRes.status).toHaveBeenCalledWith(200);
-      expect(mockRes.send).toHaveBeenCalledWith(mockWordList[0]);
-    });
-
-    test('when word_length param is not ok, 400 status is set and error message is sent', () => {
-      mockGetData.mockReturnValueOnce([]);
-  
-      const mockReq: Partial<Request> = { query: { word_length: 'abc' } };
-  
-      getWord(mockReq as Request, mockRes as Response);
-  
-      expect(mockRes.status).toHaveBeenCalledWith(400);
-      expect(mockRes.send).toHaveBeenCalledWith(BAD_REQUEST_MESSAGE);
-    });
-  });
-
-  test('when data is not fetched, 500 status is set and error message is sent', () => {
-    mockGetData.mockReturnValueOnce([]);
-
+describe('getWord', () => {
+  test('when word_length param is received, 200 status is set and word is sent', () => {
     const mockReq: Partial<Request> = { query: { word_length: '5' } };
 
     getWord(mockReq as Request, mockRes as Response);
+    // @ts-ignore: Unreachable code error
+    const sentWord: string = mockRes.send.mock.calls[0][0];
 
-    expect(mockRes.status).toHaveBeenCalledWith(500);
-    expect(mockRes.send).toHaveBeenCalledWith(ERROR_MESSAGE);
+    expect(mockRes.status).toHaveBeenCalledWith(200);
+    expect(typeof sentWord).toEqual('string');
+    expect(sentWord.length).toBeGreaterThan(0);
+  });
+
+  test('when word_length param is not received, 200 status is set and word is sent', () => {
+    const mockReq: Partial<Request> = { query: {} };
+
+    getWord(mockReq as Request, mockRes as Response);
+    // @ts-ignore: Unreachable code error
+    const sentWord: string = mockRes.send.mock.calls[0][0];
+
+    expect(mockRes.status).toHaveBeenCalledWith(200);
+    expect(typeof sentWord).toEqual('string');
+    expect(sentWord.length).toBeGreaterThan(0);
+  });
+
+  test('when word_length param is not a valid length, 200 status is set and word is sent', () => {
+    const mockReq: Partial<Request> = { query: { word_length: '5A' } };
+
+    getWord(mockReq as Request, mockRes as Response);
+    // @ts-ignore: Unreachable code error
+    const sentWord: string = mockRes.send.mock.calls[0][0];
+
+    expect(mockRes.status).toHaveBeenCalledWith(200);
+    expect(typeof sentWord).toEqual('string');
+    expect(sentWord.length).toBeGreaterThan(0);
   });
 });
