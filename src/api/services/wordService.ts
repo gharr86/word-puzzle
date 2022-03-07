@@ -8,7 +8,7 @@ const getData = (): string[] => {
 };
 
  class WordService {
-  wordLength: number;
+  wordLength: number | null;
   wordsList: string[];
 
   constructor(_length = null) {

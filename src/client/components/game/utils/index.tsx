@@ -41,19 +41,20 @@ export const getGuess = (
   let status: GuessStatus = 'incorrect';
 
   if (letterIsInWord) {
+    const moreThanOneOccurrenceInWord: boolean = letterOccurrencesInWord.length > 1;
+    const letterOccurrencesInGuessUntilNow: number[] = getOccurrenceIndexes(guessValuesArray, letter, index);
+    const noMoreOccurrencesLeft: boolean = letterOccurrencesInGuessUntilNow.length > letterOccurrencesInWord.length;
     const letterIsInCorrectPosition: boolean = letterOccurrencesInWord.includes(index);
 
     if (letterIsInCorrectPosition) {
-      status = 'correct';
-    } else  {
-      const moreThanOneOccurrenceInWord: boolean = letterOccurrencesInWord.length > 1;
-      
       if (moreThanOneOccurrenceInWord) {
-        const letterOccurrencesInGuessUntilNow: number[] = getOccurrenceIndexes(guessValuesArray, letter, index);
-        
-        status = letterOccurrencesInGuessUntilNow.length <= letterOccurrencesInWord.length
-          ? 'wrong-position'
-          : 'incorrect';
+        status = noMoreOccurrencesLeft ? 'incorrect' : 'correct';
+      } else {
+        status = 'correct';
+      }
+    } else  {
+      if (moreThanOneOccurrenceInWord) {
+        status = noMoreOccurrencesLeft ? 'incorrect' : 'wrong-position';
       } else {
         const letterOccurrencesInGuess: number[] = getOccurrenceIndexes(guessValuesArray, letter);
 

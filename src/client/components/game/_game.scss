@@ -9,7 +9,18 @@
   padding: 2em 0;
 
   &__input-list-container {
+    position: relative;
     margin-bottom: 20px;
+
+    .message {
+      position: absolute;
+      top: 37%;
+      left: 104%;
+      min-width: 140px;
+      color: red;
+      font-size: 0.8rem;
+      font-family: sans-serif;
+    }
   }
 
   &__guess-container {

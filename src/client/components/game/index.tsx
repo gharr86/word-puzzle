@@ -8,6 +8,8 @@ import GameOverPrompt from '../gameOverPrompt';
 
 import { Letter, GuessLetter, GameProps } from '../../types';
 
+import ApiService from '../../services/apiService';
+
 import { getInitialInputList, getValues, getGuess, arrayValuesAreEqual } from './utils';
 
 const Game = ({ word }: GameProps): JSX.Element => {
@@ -15,6 +17,7 @@ const Game = ({ word }: GameProps): JSX.Element => {
   const [guessList, setGuessList] = useState<GuessLetter[][]>([]);
   const [didWin, setDidWin] = useState<boolean>(false);
   const [showGameOverPrompt, setShowGameOverPrompt] = useState<boolean>(false);
+  const [showMessage, setShowMessage] = useState<boolean>(false);
 
   const inputRefs = useRef<HTMLInputElement[]>([]);
 
@@ -22,7 +25,8 @@ const Game = ({ word }: GameProps): JSX.Element => {
     inputRefs.current[0]?.focus();
   }, []);
 
-  const submitWord = (guessArray: string[]): void => {
+  const submitGuess = (): void => {
+    const guessArray: string[] = getValues(inputList);
     const wordArray: string[] = word.split('');
     const guessObj: GuessLetter[] = getGuess(guessArray, wordArray);
     const guessIsCorrect: boolean = arrayValuesAreEqual(guessArray, wordArray);
@@ -47,6 +51,18 @@ const Game = ({ word }: GameProps): JSX.Element => {
     setInputList(getInitialInputList(word));
   };
 
+  const checkWord = async (word: string): Promise<void> => {
+    const { data: wordExists } = await ApiService.checkWord(word);
+
+    if (wordExists) {
+      submitGuess();
+    } else {
+      setShowMessage(true);
+
+      inputRefs.current[inputRefs.current.length - 1].focus();
+    }
+  };
+
   useEffect(() => {
     const guessArray: string[] = getValues(inputList);
     const nextEmptyIndex: number = guessArray.findIndex((value): boolean => value.length === 0);
@@ -54,9 +70,23 @@ const Game = ({ word }: GameProps): JSX.Element => {
     if (nextEmptyIndex !== -1) {
       inputRefs.current[nextEmptyIndex].focus();
     } else {
-      submitWord(guessArray);
+      const guessWord: string = guessArray.join('');
+
+      checkWord(guessWord);
     }
   }, [inputList]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+
+    if (showMessage) {
+      timer = setTimeout(() => setShowMessage(false), 1000);
+    }
+  
+    return () => {
+      clearTimeout(timer);
+    }
+  }, [showMessage]);
 
   const updateValue = (newValue: string, index: number): void => {
     const pattern: RegExp = new RegExp(/^[a-zA-Z]*$/g);
@@ -108,6 +138,10 @@ const Game = ({ word }: GameProps): JSX.Element => {
       <section className="game">
         <section className="game__input-list-container">
           {renderInputList}
+          {
+            showMessage
+            && <div className="message">La palabra no es valida!</div>
+          }
         </section>
         <section className="game__guess-container">
           <div className="game__guess-container__guess-list">
