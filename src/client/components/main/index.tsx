@@ -21,7 +21,7 @@ const Main = (): JSX.Element => {
   return (
     <main className="main">
       {
-        Boolean(word.length)
+        word.length
           ? <Game word={word} />
           : <CircularProgress />
       }

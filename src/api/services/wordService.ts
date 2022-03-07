@@ -8,16 +8,14 @@ const getData = (): string[] => {
 };
 
  class WordService {
-  wordLength: number | null;
   wordsList: string[];
 
   constructor(_length = null) {
-    this.wordLength = _length;
     this.wordsList = getData();
   }
 
-  filterByLength(): string[] {
-    const { wordLength, wordsList } = this;
+  filterByLength(wordLength: number | null): string[] {
+    const { wordsList } = this;
 
     if (wordLength) {
       return wordsList.filter((word: string): boolean => word.length === wordLength);
@@ -26,8 +24,8 @@ const getData = (): string[] => {
     return wordsList;
   }
 
-  getRandomWord(): string {
-    const filteredList: string[] = this.filterByLength();
+  getRandomWord(length: number | null): string {
+    const filteredList: string[] = this.filterByLength(length);
     const randomIndex: number = Math.floor(Math.random() * filteredList.length);
 
     return filteredList[randomIndex].toUpperCase();

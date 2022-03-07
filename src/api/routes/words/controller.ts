@@ -10,7 +10,7 @@ export const getWord = (req: Request, res: Response): Response<string> => {
     ? Number(word_length)
     : null;
 
-  const randomWord: string = new WordService(wordLengthValue).getRandomWord();
+  const randomWord: string = new WordService().getRandomWord(wordLengthValue);
 
   return res.status(200).send(randomWord);
 };
@@ -18,7 +18,7 @@ export const getWord = (req: Request, res: Response): Response<string> => {
 export const checkWord = (req: Request, res: Response): Response<string> => {
   const { body: { word } } = req;
 
-  const wordIsInList: boolean = Boolean(word?.length)
+  const wordIsInList: boolean = word?.length
     ? new WordService().wordIsInList(word)
     : false;
 
