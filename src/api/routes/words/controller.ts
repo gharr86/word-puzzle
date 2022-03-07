@@ -18,7 +18,9 @@ export const getWord = (req: Request, res: Response): Response<string> => {
 export const checkWord = (req: Request, res: Response): Response<string> => {
   const { body: { word } } = req;
 
-  const wordIsInList: boolean = new WordService().wordIsInList(word);
+  const wordIsInList: boolean = Boolean(word?.length)
+    ? new WordService().wordIsInList(word)
+    : false;
 
   return res.status(200).send(wordIsInList);
 };

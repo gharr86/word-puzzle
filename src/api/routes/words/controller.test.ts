@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { getWord } from './controller';
+import { getWord, checkWord } from './controller';
 let mockRes: Partial<Response>;
 
 beforeEach(() => {
@@ -21,7 +21,7 @@ describe('getWord', () => {
 
     expect(mockRes.status).toHaveBeenCalledWith(200);
     expect(typeof sentWord).toEqual('string');
-    expect(sentWord.length).toBeGreaterThan(0);
+    expect(sentWord.length).toEqual(5);
   });
 
   test('when word_length param is not received, 200 status is set and word is sent', () => {
@@ -46,5 +46,25 @@ describe('getWord', () => {
     expect(mockRes.status).toHaveBeenCalledWith(200);
     expect(typeof sentWord).toEqual('string');
     expect(sentWord.length).toBeGreaterThan(0);
+  });
+});
+
+describe('checkWord', () => {
+  test('when word is received, its checked against list', () => {
+    const mockReq: Partial<Request> = { body: { word: 'casa' } };
+
+    checkWord(mockReq as Request, mockRes as Response);
+
+    expect(mockRes.status).toHaveBeenCalledWith(200);
+    expect(mockRes.send).toHaveBeenCalledWith(true);
+  });
+
+  test('when word is not received, it returns false', () => {
+    const mockReq: Partial<Request> = { body: {} };
+
+    checkWord(mockReq as Request, mockRes as Response);
+
+    expect(mockRes.status).toHaveBeenCalledWith(200);
+    expect(mockRes.send).toHaveBeenCalledWith(false);
   });
 });
