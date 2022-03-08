@@ -11,6 +11,7 @@ const basicProps: GameOverPromptProps = {
   onClickOutside: jest.fn(),
   word: 'VIAJE',
   didWin: false,
+  onClickBtn: jest.fn(),
 };
 
 const renderGameOverPrompt = (newProps: {} = {}): RenderResult => {
@@ -44,8 +45,16 @@ describe('<GameOverPrompt />', () => {
   test('when background is clicked, onClickOutside prop is called', () => {
     renderGameOverPrompt();
 
-    fireEvent.click(screen.getByRole('button'));
+    fireEvent.click(screen.getAllByRole('button')[0]);
 
     expect(basicProps.onClickOutside).toHaveBeenCalled();
+  });
+
+  test('when restart button is clicked, onClickOutside prop is called', () => {
+    renderGameOverPrompt();
+
+    fireEvent.click(screen.getAllByRole('button')[1]);
+
+    expect(basicProps.onClickBtn).toHaveBeenCalled();
   });
 });

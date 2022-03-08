@@ -175,6 +175,7 @@ const Game = ({ word }: GameProps): JSX.Element => {
             didWin={didWin}
             word={word}
             onClickOutside={() => setShowGameOverPrompt(false)}
+            onClickBtn={() => window.location.reload()}
           />
         )
       }
