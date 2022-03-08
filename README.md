@@ -1,6 +1,8 @@
 # WORD PUZZLE
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Word puzzle game.
+
+![Alt text](./screenshot.jpg?raw=true "Word Puzzle")
 
 ## Available Scripts
 
