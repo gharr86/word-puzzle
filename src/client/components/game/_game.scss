@@ -2,9 +2,9 @@
 @import '../guessWord/guessWord';
 @import '../alphabet/alphabet';
 @import '../gameOverPrompt/gameOverPrompt';
+@import '../spinner/spinner';
 
 .game {
-  min-height: 100vh;
   @include display-flex(flex-start, center, column nowrap);
   padding: 2em 0;
 

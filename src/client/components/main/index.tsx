@@ -4,7 +4,7 @@ import Game from '../game';
 import Spinner from '../spinner';
 
 import ApiService from '../../services/apiService';
-import { WORD_LENGTH } from '../../constants';
+import { WORD_LENGTH, MAIN_TITLE } from '../../constants';
 
 const Main = (): JSX.Element => {
   const [word, setWord] = useState<string>('');
@@ -19,6 +19,9 @@ const Main = (): JSX.Element => {
 
   return (
     <main className="main">
+      <h1 className="main__title">
+        {MAIN_TITLE}
+      </h1>
       {
         word.length
           ? <Game word={word} />

@@ -8,6 +8,7 @@ export const MAX_GUESSES: number = 5;
 export const WORD_LENGTH: number = 5;
 
 // STRINGS
+export const MAIN_TITLE: string = 'Adivina la palabra';
 export const WIN_MESSAGE: string = 'Ganaste!! :)';
 export const LOOSE_MESSAGE: string = 'Perdiste :(';
 export const WRONG_WORD_MESSAGE: string = 'Esa palabra no existe!';

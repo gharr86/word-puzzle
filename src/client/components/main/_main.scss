@@ -2,5 +2,9 @@
 
 .main {
   min-height: 100vh;
-  @include display-flex(center);
+  @include display-flex(flex-start, center, column nowrap);
+
+  &__title {
+    font-family: sans-serif;
+  }
 }

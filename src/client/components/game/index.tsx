@@ -100,7 +100,7 @@ const Game = ({ word }: GameProps): JSX.Element => {
   }, [showMessage]);
 
   const updateValue = (newValue: string, index: number): void => {
-    const pattern: RegExp = new RegExp(/^[a-zA-Z]*$/g);
+    const pattern: RegExp = new RegExp(/^[ña-zÑA-Z]*$/g);
 
     if (pattern.test(newValue)) {
       const currentInputList: Letter[] = [...inputList];
