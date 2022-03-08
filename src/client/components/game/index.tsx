@@ -24,35 +24,30 @@ const Game = ({ word }: GameProps): JSX.Element => {
 
   const inputRefs = useRef<HTMLInputElement[]>([]);
 
+  const resetInputs = (): void => {
+    setInputList(getInitialInputList(word));
+    inputRefs.current[0]?.focus();
+  };
+
   useEffect(() => {
     inputRefs.current[0]?.focus();
   }, []);
 
-  const submitGuess = (): void => {
+  useEffect(() => {
     const guessArray: string[] = getValues(inputList);
     const wordArray: string[] = word.split('');
-    const guessObj: GuessLetter[] = getGuess(guessArray, wordArray);
     const guessIsCorrect: boolean = arrayValuesAreEqual(guessArray, wordArray);
-
-    setGuessList((prevGuessList: GuessLetter[][]) => ([
-      ...prevGuessList,
-      guessObj,
-    ]));
 
     if (guessIsCorrect) {
       setDidWin(true);
       setShowGameOverPrompt(true);
-
-      return;
     } else if (guessList.length > MAX_GUESSES) {
       setDidWin(false);
       setShowGameOverPrompt(true);
-
-      return;
+    } else {
+      resetInputs();
     }
-
-    setInputList(getInitialInputList(word));
-  };
+  }, [guessList]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const checkWord = async (word: string): Promise<void> => {
     setIsFetching(true);
@@ -61,11 +56,16 @@ const Game = ({ word }: GameProps): JSX.Element => {
       const { data: wordExists } = await ApiService.checkWord(word);
 
       if (wordExists) {
-        submitGuess();
+        const guessArray: string[] = getValues(inputList);
+        const wordArray: string[] = word.split('');
+        const guessObj: GuessLetter[] = getGuess(guessArray, wordArray);
+    
+        setGuessList((prevGuessList: GuessLetter[][]) => ([
+          ...prevGuessList,
+          guessObj,
+        ]));
       } else {
         setShowMessage(true);
-
-        inputRefs.current[inputRefs.current.length - 1].focus();
       }
     } catch (error) {
       console.log(error);
@@ -96,6 +96,7 @@ const Game = ({ word }: GameProps): JSX.Element => {
   
     return () => {
       clearTimeout(timer);
+      inputRefs.current[inputRefs.current.length - 1].focus(); // eslint-disable-line react-hooks/exhaustive-deps
     }
   }, [showMessage]);
 
@@ -116,8 +117,12 @@ const Game = ({ word }: GameProps): JSX.Element => {
   };
 
   const handleOnKeyUp = (key: string, index: number): void => {
-    if (key === 'Backspace' && index !== 0) {
-      updateValue('', index - 1);
+    if (key === 'Backspace') {
+      if (index === inputList.length -1 && inputList[index].value) {
+        updateValue('', index);
+      } else if (index !== 0) {
+        updateValue('', index - 1);
+      }
     }
   };
 

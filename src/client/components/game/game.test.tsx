@@ -140,7 +140,7 @@ describe('<Game />', () => {
     mockApiService.checkWord.mockResolvedValue(getMockResp(true) as AxiosResponse);
     renderGame();
 
-    for (let i = 0; i < MAX_GUESSES + 2; i++) {
+    for (let i = 0; i < MAX_GUESSES + 1; i++) {
       enterBadGuess(screen);
       await waitForElementToBeRemoved(screen.queryByTestId('spinner'));
     }
