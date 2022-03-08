@@ -5,6 +5,8 @@ import '@testing-library/jest-dom/extend-expect';
 import GameOverPrompt from '.';
 import { GameOverPromptProps } from '../../types';
 
+import { WIN_MESSAGE, LOOSE_MESSAGE } from '../../constants';
+
 const basicProps: GameOverPromptProps = {
   onClickOutside: jest.fn(),
   word: 'VIAJE',
@@ -28,14 +30,14 @@ describe('<GameOverPrompt />', () => {
   test('when didWin is false, loose message is rendered and word is shown', () => {
     renderGameOverPrompt();
 
-    expect(screen.getByText(/perdiste/i)).toBeInTheDocument();
+    expect(screen.getByText(LOOSE_MESSAGE)).toBeInTheDocument();
     expect(screen.getByText(basicProps.word)).toBeInTheDocument();
   });
 
   test('when didWin is true, win message is rendered and word is not shown', () => {
     renderGameOverPrompt({ didWin: true });
 
-    expect(screen.getByText(/ganaste/i)).toBeInTheDocument();
+    expect(screen.getByText(WIN_MESSAGE)).toBeInTheDocument();
     expect(screen.queryByText(basicProps.word)).not.toBeInTheDocument();
   });
 

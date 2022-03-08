@@ -5,10 +5,12 @@ import LetterInput from '../letterInput';
 import GuessWord from '../guessWord';
 import Alphabet from '../alphabet';
 import GameOverPrompt from '../gameOverPrompt';
+import Spinner from '../spinner';
 
 import { Letter, GuessLetter, GameProps } from '../../types';
 
 import ApiService from '../../services/apiService';
+import { MAX_GUESSES, WRONG_WORD_MESSAGE } from '../../constants';
 
 import { getInitialInputList, getValues, getGuess, arrayValuesAreEqual } from './utils';
 
@@ -18,6 +20,7 @@ const Game = ({ word }: GameProps): JSX.Element => {
   const [didWin, setDidWin] = useState<boolean>(false);
   const [showGameOverPrompt, setShowGameOverPrompt] = useState<boolean>(false);
   const [showMessage, setShowMessage] = useState<boolean>(false);
+  const [isFetching, setIsFetching] = useState<boolean>(false);
 
   const inputRefs = useRef<HTMLInputElement[]>([]);
 
@@ -41,7 +44,7 @@ const Game = ({ word }: GameProps): JSX.Element => {
       setShowGameOverPrompt(true);
 
       return;
-    } else if (guessList.length > 5) {
+    } else if (guessList.length > MAX_GUESSES) {
       setDidWin(false);
       setShowGameOverPrompt(true);
 
@@ -52,15 +55,23 @@ const Game = ({ word }: GameProps): JSX.Element => {
   };
 
   const checkWord = async (word: string): Promise<void> => {
-    const { data: wordExists } = await ApiService.checkWord(word);
+    setIsFetching(true);
 
-    if (wordExists) {
-      submitGuess();
-    } else {
-      setShowMessage(true);
+    try {
+      const { data: wordExists } = await ApiService.checkWord(word);
 
-      inputRefs.current[inputRefs.current.length - 1].focus();
+      if (wordExists) {
+        submitGuess();
+      } else {
+        setShowMessage(true);
+
+        inputRefs.current[inputRefs.current.length - 1].focus();
+      }
+    } catch (error) {
+      console.log(error);
     }
+
+    setIsFetching(false);
   };
 
   useEffect(() => {
@@ -135,12 +146,12 @@ const Game = ({ word }: GameProps): JSX.Element => {
 
   return (
     <>
-      <section className="game">
+      <section className="game" data-testid="game">
         <section className="game__input-list-container">
           {renderInputList}
           {
             showMessage
-            && <div className="message">La palabra no es valida!</div>
+            && <div className="message">{WRONG_WORD_MESSAGE}</div>
           }
         </section>
         <section className="game__guess-container">
@@ -161,6 +172,9 @@ const Game = ({ word }: GameProps): JSX.Element => {
             onClickOutside={() => setShowGameOverPrompt(false)}
           />
         )
+      }
+      {
+        isFetching && <Spinner />
       }
     </>
   );

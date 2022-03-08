@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from 'react';
 
-import { CircularProgress } from '@mui/material';
-
 import Game from '../game';
+import Spinner from '../spinner';
 
 import ApiService from '../../services/apiService';
+import { WORD_LENGTH } from '../../constants';
 
 const Main = (): JSX.Element => {
   const [word, setWord] = useState<string>('');
 
   useEffect(() => {
     ApiService
-      .getWord(5)
-      .then(({ data }) => {
-        setWord(data);
-      });
+      .getWord(WORD_LENGTH)
+      .then(({ data }) => setWord(data))
+      .catch(err => console.log(err));
   }, [])
   
 
@@ -23,7 +22,7 @@ const Main = (): JSX.Element => {
       {
         word.length
           ? <Game word={word} />
-          : <CircularProgress />
+          : <Spinner />
       }
     </main>
   );

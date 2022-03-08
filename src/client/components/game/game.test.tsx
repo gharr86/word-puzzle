@@ -1,12 +1,26 @@
 import React from 'react';
-import { render, RenderResult, screen, fireEvent, Screen } from '@testing-library/react';
+import { render, RenderResult, screen, fireEvent, Screen, waitForElementToBeRemoved } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
+import { AxiosResponse } from 'axios';
 
 import Game from '.';
+import ApiService from '../../services/apiService';
 
 import { GameProps } from '../../types';
 
-import { correctColor, wrongPositionColor, incorrectColor } from '../../constants';
+import {
+  CORRECT_COLOR,
+  WRONG_POSITION_COLOR,
+  INCORRECT_COLOR,
+  WRONG_WORD_MESSAGE,
+  WIN_MESSAGE,
+  MAX_GUESSES,
+  LOOSE_MESSAGE,
+} from '../../constants';
+
+jest.mock('../../services/apiService');
+
+const mockApiService = ApiService as jest.Mocked<typeof ApiService>;
 
 const basicProps: GameProps = { word: 'VIAJE' };
 
@@ -19,7 +33,7 @@ const renderGame = (newProps: {} = {}): RenderResult => {
   return render(<Game {...props} />);
 };
 
-const maxGuessQty: number = 6;
+const getMockResp = (data: boolean): Partial<AxiosResponse> => ({ data });
 const getFakeChangeEvent = (value: string) => ({ target: { value } });
 const enterBadGuess = (screen: Screen): void => {
   fireEvent.change(screen.getAllByRole('textbox')[0], getFakeChangeEvent('l'));
@@ -74,10 +88,22 @@ describe('<Game />', () => {
     expect(screen.getAllByRole('textbox')[0]).toHaveFocus();
   });
 
-  test('when a word is submitted, it appears in submitted words list', () => {
+  test('when an invalid word is submitted, error message is shown and las input is focused', async () => {
+    mockApiService.checkWord.mockResolvedValueOnce(getMockResp(false) as AxiosResponse);
+    renderGame();
+
+    enterBadGuess(screen);
+    await waitForElementToBeRemoved(screen.queryByTestId('spinner'));
+
+    expect(screen.getByText(WRONG_WORD_MESSAGE)).toBeInTheDocument();
+  });
+
+  test('when a valid word is submitted, it appears in submitted words list', async () => {
+      mockApiService.checkWord.mockResolvedValueOnce(getMockResp(true) as AxiosResponse);
       renderGame();
   
       enterBadGuess(screen);
+      await waitForElementToBeRemoved(screen.queryByTestId('spinner'));
 
       expect(screen.getAllByText('L')[0]).toBeInTheDocument();
       expect(screen.getAllByText('I')[0]).toBeInTheDocument();
@@ -86,33 +112,39 @@ describe('<Game />', () => {
       expect(screen.getAllByText('R')[0]).toBeInTheDocument();
   });
 
-  test('when a word is submitted, alphabet is updated with submitted letters status', () => {
+  test('when a valid word is submitted, alphabet is updated with submitted letters status', async () => {
+    mockApiService.checkWord.mockResolvedValueOnce(getMockResp(true) as AxiosResponse);
     renderGame();
 
     enterBadGuess(screen);
+    await waitForElementToBeRemoved(screen.queryByTestId('spinner'));
 
-    expect(screen.getAllByText('L')[1]).toHaveStyle(`background: ${incorrectColor}`);
-    expect(screen.getAllByText('I')[1]).toHaveStyle(`background: ${correctColor}`);
-    expect(screen.getAllByText('J')[1]).toHaveStyle(`background: ${wrongPositionColor}`);
-    expect(screen.getAllByText('A')[1]).toHaveStyle(`background: ${wrongPositionColor}`);
-    expect(screen.getAllByText('R')[1]).toHaveStyle(`background: ${incorrectColor}`);
+    expect(screen.getAllByText('L')[1]).toHaveStyle(`background: ${INCORRECT_COLOR}`);
+    expect(screen.getAllByText('I')[1]).toHaveStyle(`background: ${CORRECT_COLOR}`);
+    expect(screen.getAllByText('J')[1]).toHaveStyle(`background: ${WRONG_POSITION_COLOR}`);
+    expect(screen.getAllByText('A')[1]).toHaveStyle(`background: ${WRONG_POSITION_COLOR}`);
+    expect(screen.getAllByText('R')[1]).toHaveStyle(`background: ${INCORRECT_COLOR}`);
   });
 
-  test('when guess is correct, game over modal is rendered', () => {
+  test('when guess is correct, game over modal is rendered', async () => {
+    mockApiService.checkWord.mockResolvedValueOnce(getMockResp(true) as AxiosResponse);
     renderGame();
 
     enterGoodGuess(screen);
+    await waitForElementToBeRemoved(screen.queryByTestId('spinner'));
 
-    expect(screen.getByText(/ganaste/i)).toBeInTheDocument();
+    expect(screen.getByText(WIN_MESSAGE)).toBeInTheDocument();
   });
 
-  test('when max guess quantity is reached, game over modal is rendered', () => {
+  test('when max guess quantity is reached, game over modal is rendered', async () => {
+    mockApiService.checkWord.mockResolvedValue(getMockResp(true) as AxiosResponse);
     renderGame();
 
-    for (let i = 0; i < maxGuessQty; i++) {
+    for (let i = 0; i < MAX_GUESSES + 2; i++) {
       enterBadGuess(screen);
+      await waitForElementToBeRemoved(screen.queryByTestId('spinner'));
     }
     
-    expect(screen.getByText(/perdiste/i)).toBeInTheDocument();
+    expect(screen.getByText(LOOSE_MESSAGE)).toBeInTheDocument();
   });
 });

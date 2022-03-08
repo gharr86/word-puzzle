@@ -2,14 +2,16 @@ import React from 'react';
 
 import { GameOverPromptProps } from '../../types';
 
+import { WIN_MESSAGE, LOOSE_MESSAGE } from '../../constants';
+
 const GameOverPrompt = ({
   onClickOutside,
   word,
   didWin,
 }: GameOverPromptProps): JSX.Element => {
   const winText: string = didWin
-    ? 'GANASTE :)'
-    : 'PERDISTE :(';
+    ? WIN_MESSAGE
+    : LOOSE_MESSAGE;
 
   return (
     <>

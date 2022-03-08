@@ -10,7 +10,7 @@ const getData = (): string[] => {
  class WordService {
   wordsList: string[];
 
-  constructor(_length = null) {
+  constructor() {
     this.wordsList = getData();
   }
 
