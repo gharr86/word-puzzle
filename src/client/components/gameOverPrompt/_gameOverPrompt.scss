@@ -1,3 +1,5 @@
+@import '../button/button';
+
 .game-over-prompt {
   &__background {
     position: fixed;
@@ -15,7 +17,7 @@
     position: fixed;
     z-index: 2;
     top: 40%;
-    left: 32%;
+    left: 37%;
     background: #FFF;
     border-radius: 5px;
     width: 400px;
@@ -36,13 +38,6 @@
     &__word {
       font-size: 1.1rem;
       font-family: sans-serif;
-    }
-
-    &__btn {
-      font-size: 1rem;
-      font-family: sans-serif;
-      font-weight: bold;
-      padding: 10px;
     }
   }
 }

@@ -3,6 +3,7 @@
 @import '../alphabet/alphabet';
 @import '../gameOverPrompt/gameOverPrompt';
 @import '../spinner/spinner';
+@import '../button/button';
 
 .game {
   @include display-flex(flex-start, center, column nowrap);
@@ -25,6 +26,7 @@
 
   &__guess-container {
     @include display-flex(flex-start, center, column nowrap);
+    margin-bottom: 20px;
 
     &__guess-list {
       margin-bottom: 20px;

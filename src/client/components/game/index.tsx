@@ -6,11 +6,12 @@ import GuessWord from '../guessWord';
 import Alphabet from '../alphabet';
 import GameOverPrompt from '../gameOverPrompt';
 import Spinner from '../spinner';
+import Button from '../button';
 
 import { Letter, GuessLetter, GameProps } from '../../types';
 
 import ApiService from '../../services/apiService';
-import { MAX_GUESSES, WRONG_WORD_MESSAGE } from '../../constants';
+import { MAX_GUESSES, WRONG_WORD_MESSAGE, RESTART_TEXT } from '../../constants';
 
 import { getInitialInputList, getValues, getGuess, arrayValuesAreEqual } from './utils';
 
@@ -28,6 +29,8 @@ const Game = ({ word }: GameProps): JSX.Element => {
     setInputList(getInitialInputList(word));
     inputRefs.current[0]?.focus();
   };
+
+  const reloadWindow = (): void => window.location.reload();
 
   useEffect(() => {
     inputRefs.current[0]?.focus();
@@ -167,6 +170,10 @@ const Game = ({ word }: GameProps): JSX.Element => {
             <Alphabet guessWordsList={guessList} />
           </div>
         </section>
+        <Button
+          text={RESTART_TEXT}
+          onClick={reloadWindow}
+        />
       </section>
       {
         showGameOverPrompt
@@ -175,7 +182,7 @@ const Game = ({ word }: GameProps): JSX.Element => {
             didWin={didWin}
             word={word}
             onClickOutside={() => setShowGameOverPrompt(false)}
-            onClickBtn={() => window.location.reload()}
+            onClickBtn={reloadWindow}
           />
         )
       }

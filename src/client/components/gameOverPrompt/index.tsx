@@ -1,8 +1,10 @@
 import React from 'react';
 
+import Button from '../button';
+
 import { GameOverPromptProps } from '../../types';
 
-import { WIN_MESSAGE, LOOSE_MESSAGE, RESTART_BTN_TEXT } from '../../constants';
+import { WIN_MESSAGE, LOOSE_MESSAGE, PLAY_AGAIN_TEXT } from '../../constants';
 
 const GameOverPrompt = ({
   onClickOutside,
@@ -33,12 +35,10 @@ const GameOverPrompt = ({
             </p>
           )
         }
-        <button
-          className="game-over-prompt__prompt__btn"
+        <Button
+          text={PLAY_AGAIN_TEXT}
           onClick={onClickBtn}
-        >
-          {RESTART_BTN_TEXT}
-        </button>
+        />
       </div>
     </>
   );

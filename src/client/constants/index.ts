@@ -11,5 +11,6 @@ export const WORD_LENGTH: number = 5;
 export const MAIN_TITLE: string = 'Adivina la palabra';
 export const WIN_MESSAGE: string = 'Ganaste!! :)';
 export const LOOSE_MESSAGE: string = 'Perdiste :(';
-export const RESTART_BTN_TEXT: string = 'Jugar de nuevo';
+export const RESTART_TEXT: string = 'Reiniciar juego';
+export const PLAY_AGAIN_TEXT: string = 'Jugar de nuevo';
 export const WRONG_WORD_MESSAGE: string = 'Esa palabra no existe!';

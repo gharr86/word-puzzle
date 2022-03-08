@@ -33,3 +33,8 @@ export interface GameOverPromptProps {
 export interface GameProps {
   word: string
 }
+
+export interface ButtonProps {
+  onClick: () => void
+  text: string
+}
