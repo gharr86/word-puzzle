@@ -49,11 +49,11 @@ const Game = ({ word }: GameProps): JSX.Element => {
     }
   }, [guessList]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const checkWord = async (word: string): Promise<void> => {
+  const checkWord = async (guessWord: string): Promise<void> => {
     setIsFetching(true);
 
     try {
-      const { data: wordExists } = await ApiService.checkWord(word);
+      const { data: wordExists } = await ApiService.checkWord(guessWord);
 
       if (wordExists) {
         const guessArray: string[] = getValues(inputList);
