@@ -7,7 +7,7 @@ const getData = (): string[] => {
   return JSON.parse(rawWordsList);
 };
 
- class WordService {
+class WordService {
   wordsList: string[];
 
   constructor() {
