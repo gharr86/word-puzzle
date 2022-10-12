@@ -14,7 +14,7 @@ const basicProps: GameOverPromptProps = {
   onClickBtn: jest.fn(),
 };
 
-const renderGameOverPrompt = (newProps: {} = {}): RenderResult => {
+const renderGameOverPrompt = (newProps: Partial<GameOverPromptProps> = {}): RenderResult => {
   const props = {
     ...basicProps,
     ...newProps,

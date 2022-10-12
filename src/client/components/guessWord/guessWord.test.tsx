@@ -26,7 +26,7 @@ const basicProps: GuessWordProps = {
   ],
 };
 
-const renderGuessWord = (newProps: {} = {}): RenderResult => {
+const renderGuessWord = (newProps: Partial<GuessWordProps> = {}): RenderResult => {
   const props = {
     ...basicProps,
     ...newProps,

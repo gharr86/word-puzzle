@@ -10,7 +10,7 @@ const basicProps: ButtonProps = {
   text: 'Button',
 };
 
-const renderButton = (newProps: {} = {}): RenderResult => {
+const renderButton = (newProps: Partial<ButtonProps> = {}): RenderResult => {
   const props = {
     ...basicProps,
     ...newProps,

@@ -24,11 +24,11 @@ const basicProps: AlphabetProps = {
         value: 'A',
         status: 'correct',
       },
-    ]
+    ],
   ],
 };
 
-const renderAlphabet = (newProps: {} = {}): RenderResult => {
+const renderAlphabet = (newProps: Partial<AlphabetProps> = {}): RenderResult => {
   const props = {
     ...basicProps,
     ...newProps,

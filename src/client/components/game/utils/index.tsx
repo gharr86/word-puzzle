@@ -15,7 +15,7 @@ export const getValues = (inputList: Letter[]): string[] => inputList.map(({ val
 const getOccurrenceIndexes = (
   word: string[],
   letter: string,
-  indexCut: number | null = null
+  indexCut: number | null = null,
 ): number[] => {
   const letterOccurrenceIndexes: number[] = [];
   let wordArray: string[] = [...word];
@@ -36,7 +36,7 @@ export const getGuess = (
   wordArray: string[],
 ) => guessValuesArray.map((letter: string, index: number): GuessLetter => {
   const letterOccurrencesInWord: number[] = getOccurrenceIndexes(wordArray, letter);
-  const letterIsInWord: boolean = Boolean(letterOccurrencesInWord.length);
+  const letterIsInWord = Boolean(letterOccurrencesInWord.length);
 
   let status: GuessStatus = 'incorrect';
 

@@ -117,7 +117,7 @@ export const getAllLetters = (guessWordsList: GuessLetter[][]): GuessLetter[] =>
   const usedLetters: GuessLetter[] = guessWordsList.reduce((
     prevWord: GuessLetter[],
     currWord: GuessLetter[],
-    ) => ([...prevWord, ...currWord]));
+  ) => ([...prevWord, ...currWord]));
   const usedLettersWithoutRepeat: GuessLetter[] = Array.from(new Set(usedLetters));
 
   return allLetters.map((letter: GuessLetter): GuessLetter => {
@@ -127,6 +127,6 @@ export const getAllLetters = (guessWordsList: GuessLetter[][]): GuessLetter[] =>
     return {
       ...letter,
       status,
-    }
+    };
   });
 };

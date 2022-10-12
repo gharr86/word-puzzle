@@ -24,7 +24,7 @@ const mockApiService = ApiService as jest.Mocked<typeof ApiService>;
 
 const basicProps: GameProps = { word: 'VIAJE' };
 
-const renderGame = (newProps: {} = {}): RenderResult => {
+const renderGame = (newProps: Partial<GameProps> = {}): RenderResult => {
   const props = {
     ...basicProps,
     ...newProps,
@@ -35,19 +35,19 @@ const renderGame = (newProps: {} = {}): RenderResult => {
 
 const getMockResp = (data: boolean): Partial<AxiosResponse> => ({ data });
 const getFakeChangeEvent = (value: string) => ({ target: { value } });
-const enterBadGuess = (screen: Screen): void => {
-  fireEvent.change(screen.getAllByRole('textbox')[0], getFakeChangeEvent('l'));
-  fireEvent.change(screen.getAllByRole('textbox')[1], getFakeChangeEvent('i'));
-  fireEvent.change(screen.getAllByRole('textbox')[2], getFakeChangeEvent('j'));
-  fireEvent.change(screen.getAllByRole('textbox')[3], getFakeChangeEvent('a'));
-  fireEvent.change(screen.getAllByRole('textbox')[4], getFakeChangeEvent('r'));
+const enterBadGuess = (_screen: Screen): void => {
+  fireEvent.change(_screen.getAllByRole('textbox')[0], getFakeChangeEvent('l'));
+  fireEvent.change(_screen.getAllByRole('textbox')[1], getFakeChangeEvent('i'));
+  fireEvent.change(_screen.getAllByRole('textbox')[2], getFakeChangeEvent('j'));
+  fireEvent.change(_screen.getAllByRole('textbox')[3], getFakeChangeEvent('a'));
+  fireEvent.change(_screen.getAllByRole('textbox')[4], getFakeChangeEvent('r'));
 };
-const enterGoodGuess = (screen: Screen): void => {
-  fireEvent.change(screen.getAllByRole('textbox')[0], getFakeChangeEvent('v'));
-  fireEvent.change(screen.getAllByRole('textbox')[1], getFakeChangeEvent('i'));
-  fireEvent.change(screen.getAllByRole('textbox')[2], getFakeChangeEvent('a'));
-  fireEvent.change(screen.getAllByRole('textbox')[3], getFakeChangeEvent('j'));
-  fireEvent.change(screen.getAllByRole('textbox')[4], getFakeChangeEvent('e'));
+const enterGoodGuess = (_screen: Screen): void => {
+  fireEvent.change(_screen.getAllByRole('textbox')[0], getFakeChangeEvent('v'));
+  fireEvent.change(_screen.getAllByRole('textbox')[1], getFakeChangeEvent('i'));
+  fireEvent.change(_screen.getAllByRole('textbox')[2], getFakeChangeEvent('a'));
+  fireEvent.change(_screen.getAllByRole('textbox')[3], getFakeChangeEvent('j'));
+  fireEvent.change(_screen.getAllByRole('textbox')[4], getFakeChangeEvent('e'));
 };
 
 describe('<Game />', () => {
@@ -99,17 +99,17 @@ describe('<Game />', () => {
   });
 
   test('when a valid word is submitted, it appears in submitted words list', async () => {
-      mockApiService.checkWord.mockResolvedValueOnce(getMockResp(true) as AxiosResponse);
-      renderGame();
+    mockApiService.checkWord.mockResolvedValueOnce(getMockResp(true) as AxiosResponse);
+    renderGame();
   
-      enterBadGuess(screen);
-      await waitForElementToBeRemoved(screen.queryByTestId('spinner'));
+    enterBadGuess(screen);
+    await waitForElementToBeRemoved(screen.queryByTestId('spinner'));
 
-      expect(screen.getAllByText('L')[0]).toBeInTheDocument();
-      expect(screen.getAllByText('I')[0]).toBeInTheDocument();
-      expect(screen.getAllByText('J')[0]).toBeInTheDocument();
-      expect(screen.getAllByText('A')[0]).toBeInTheDocument();
-      expect(screen.getAllByText('R')[0]).toBeInTheDocument();
+    expect(screen.getAllByText('L')[0]).toBeInTheDocument();
+    expect(screen.getAllByText('I')[0]).toBeInTheDocument();
+    expect(screen.getAllByText('J')[0]).toBeInTheDocument();
+    expect(screen.getAllByText('A')[0]).toBeInTheDocument();
+    expect(screen.getAllByText('R')[0]).toBeInTheDocument();
   });
 
   test('when a valid word is submitted, alphabet is updated with submitted letters status', async () => {

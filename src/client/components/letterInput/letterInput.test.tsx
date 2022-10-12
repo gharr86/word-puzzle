@@ -11,7 +11,7 @@ const basicProps: LetterInputProps = {
   onKeyUp: jest.fn(),
 };
 
-const renderLetterInput = (newProps: {} = {}): RenderResult => {
+const renderLetterInput = (newProps: Partial<LetterInputProps> = {}): RenderResult => {
   const props = {
     ...basicProps,
     ...newProps,
@@ -26,7 +26,7 @@ describe('<LetterInput />', () => {
   });
 
   test('when input value changes, onChange prop is called', () => {
-    const newValue: string = 'abc';
+    const newValue = 'abc';
     renderLetterInput();
 
     fireEvent.change(screen.getByRole('textbox'), { target: { value: newValue } });
@@ -35,7 +35,7 @@ describe('<LetterInput />', () => {
   });
 
   test('when a key is released, onKeyUp prop is called', () => {
-    const releasedKey: string = 'Backspace';
+    const releasedKey = 'Backspace';
     renderLetterInput();
 
     fireEvent.keyUp(screen.getByRole('textbox'), { key: releasedKey });

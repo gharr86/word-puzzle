@@ -21,7 +21,7 @@ describe('getAllLetters', () => {
         value: 'A',
         status: 'correct',
       },
-    ]
+    ],
   ];
   const result: GuessLetter[] = getAllLetters(guessWordsList);
 

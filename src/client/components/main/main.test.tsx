@@ -12,7 +12,7 @@ const mockApiService = ApiService as jest.Mocked<typeof ApiService>;
 
 const basicProps = {};
 
-const renderMain = (newProps: {} = {}): RenderResult => {
+const renderMain = (newProps = {}): RenderResult => {
   const props = {
     ...basicProps,
     ...newProps,

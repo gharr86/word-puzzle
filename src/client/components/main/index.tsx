@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import Game from '../game';
 import Spinner from '../spinner';
@@ -7,14 +7,21 @@ import ApiService from '../../services/apiService';
 import { WORD_LENGTH, MAIN_TITLE } from '../../constants';
 
 const Main = (): JSX.Element => {
-  const [word, setWord] = useState<string>('');
+  const [word, setWord] = useState<string | null>(null);
+
+  const getWord = useCallback(async () => {
+    try {
+      const { data } = await ApiService.getWord(WORD_LENGTH);
+
+      setWord(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   useEffect(() => {
-    ApiService
-      .getWord(WORD_LENGTH)
-      .then(({ data }) => setWord(data))
-      .catch(err => console.log(err));
-  }, [])
+    getWord();
+  }, [getWord]);
   
 
   return (
@@ -23,7 +30,7 @@ const Main = (): JSX.Element => {
         {MAIN_TITLE}
       </h1>
       {
-        word.length
+        word?.length
           ? <Game word={word} />
           : <Spinner />
       }

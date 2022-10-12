@@ -16,12 +16,13 @@
   &__prompt {
     position: fixed;
     z-index: 2;
-    top: 40%;
-    left: 37%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
     background: #FFF;
     border-radius: 5px;
     width: 400px;
-    height: 160px;
+    height: 200px;
     @include display-flex(center, center, column nowrap);
 
     &__message,
@@ -33,6 +34,7 @@
       font-size: 1.3rem;
       font-weight: bold;
       font-family: sans-serif;
+      margin-top: unset;
     }
 
     &__word {

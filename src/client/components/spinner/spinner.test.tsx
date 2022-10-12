@@ -6,7 +6,7 @@ import Spinner from '.';
 
 const basicProps = {};
 
-const renderSpinner = (newProps: {} = {}): RenderResult => {
+const renderSpinner = (newProps = {}): RenderResult => {
   const props = {
     ...basicProps,
     ...newProps,

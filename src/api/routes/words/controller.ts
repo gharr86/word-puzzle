@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Request, Response } from 'express';
 
 import WordService from '../../services/wordService';
@@ -5,7 +6,7 @@ import WordService from '../../services/wordService';
 export const getWord = (req: Request, res: Response): Response<string> => {
   const { query: { word_length } } = req;
 
-  const wordLengthIsReceived: boolean = Boolean(word_length?.length);
+  const wordLengthIsReceived = Boolean(word_length?.length);
   const wordLengthValue: number | null = (wordLengthIsReceived && !Number.isNaN(Number(word_length)))
     ? Number(word_length)
     : null;
