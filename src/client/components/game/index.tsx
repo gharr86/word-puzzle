@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, useRef, useEffect, useCallback, useMemo } from 'react';
+import React, { ReactElement, useState, useRef, useEffect, useCallback } from 'react';
 import { nanoid } from 'nanoid';
 
 import LetterInput from '../letterInput';
@@ -50,7 +50,7 @@ const Game = ({ word }: GameProps): JSX.Element => {
     } else {
       resetInputs();
     }
-  }, [guessList, word, resetInputs]);
+  }, [guessList, word, resetInputs]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const checkWord = useCallback(async (guessWord: string): Promise<void> => {
     setIsFetching(true);
@@ -104,6 +104,7 @@ const Game = ({ word }: GameProps): JSX.Element => {
   }, [showMessage]);
 
   const updateValue = (newValue: string, index: number): void => {
+    console.log('updateValue');
     const pattern = new RegExp(/^[ña-zÑA-Z]*$/g);
 
     if (pattern.test(newValue)) {
@@ -120,6 +121,7 @@ const Game = ({ word }: GameProps): JSX.Element => {
   };
 
   const handleOnKeyUp = (key: string, index: number): void => {
+    console.log('handleOnKeyUp');
     if (key === 'Backspace') {
       if (index === inputList.length - 1 && inputList[index].value) {
         updateValue('', index);
@@ -132,7 +134,7 @@ const Game = ({ word }: GameProps): JSX.Element => {
   const renderInputList: JSX.Element[] = inputList.map((letter: Letter, index: number): ReactElement => (
     <LetterInput
       key={nanoid()}
-      value={letter.value}
+      inputValue={letter.value}
       onChange={newValue => updateValue(newValue, index)}
       onKeyUp={key => handleOnKeyUp(key, index)}
       ref={input => {

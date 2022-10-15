@@ -4,7 +4,7 @@ import { LetterInputProps } from '../../types';
 
 const LetterInput = React.forwardRef<HTMLInputElement, LetterInputProps>((props, ref): JSX.Element => {
   const {
-    value,
+    inputValue,
     onChange,
     onKeyUp,
   } = props;
@@ -14,7 +14,7 @@ const LetterInput = React.forwardRef<HTMLInputElement, LetterInputProps>((props,
       ref={ref}
       className="letter-input"
       type="text"
-      value={value}
+      value={inputValue}
       onChange={({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => onChange(value)}
       onKeyUp={({ key }: React.KeyboardEvent<HTMLInputElement>) => onKeyUp(key)}
     />

@@ -6,7 +6,7 @@ import LetterInput from '.';
 import { LetterInputProps } from '../../types';
 
 const basicProps: LetterInputProps = {
-  value: '',
+  inputValue: '',
   onChange: jest.fn(),
   onKeyUp: jest.fn(),
 };

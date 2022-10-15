@@ -10,7 +10,7 @@ export interface GuessLetter {
 }
 
 export interface LetterInputProps {
-  value: string
+  inputValue: string
   onChange: (value: string) => void
   onKeyUp: (key: string) => void
 }
