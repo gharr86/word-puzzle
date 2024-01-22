@@ -1,8 +1,9 @@
-import React from 'react';
+import { forwardRef } from 'react';
 
+import StyledInput from './styles';
 import { LetterInputProps } from '../../types';
 
-const LetterInput = React.forwardRef<HTMLInputElement, LetterInputProps>((props, ref): JSX.Element => {
+const LetterInput = forwardRef<HTMLInputElement, LetterInputProps>((props, ref): JSX.Element => {
   const {
     inputValue,
     onChange,
@@ -10,9 +11,8 @@ const LetterInput = React.forwardRef<HTMLInputElement, LetterInputProps>((props,
   } = props;
 
   return (
-    <input
+    <StyledInput
       ref={ref}
-      className="letter-input"
       type="text"
       value={inputValue}
       onChange={({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => onChange(value)}

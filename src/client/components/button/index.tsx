@@ -1,14 +1,12 @@
-import React from 'react';
-
+import StyledButton from './styles';
 import { ButtonProps } from '../../types';
 
 const Button = ({ onClick, text }: ButtonProps) => (
-  <button
-    className="button"
+  <StyledButton
     onClick={onClick}
   >
     {text}
-  </button>
+  </StyledButton>
 );
 
 export default Button;
