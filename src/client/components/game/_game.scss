@@ -1,9 +1,6 @@
-@import '../letterInput/letterInput';
 @import '../guessWord/guessWord';
 @import '../alphabet/alphabet';
 @import '../gameOverPrompt/gameOverPrompt';
-@import '../spinner/spinner';
-@import '../button/button';
 
 .game {
   @include display-flex(flex-start, center, column nowrap);

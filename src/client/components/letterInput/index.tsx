@@ -1,9 +1,9 @@
-import { FC, forwardRef } from 'react';
+import { forwardRef } from 'react';
 
 import StyledInput from './styles';
 import { LetterInputProps } from './types';
 
-const LetterInput: FC<LetterInputProps> = forwardRef<HTMLInputElement, LetterInputProps>((props, ref) => {
+const LetterInput = forwardRef<HTMLInputElement, LetterInputProps>((props, ref): JSX.Element => {
   const {
     inputValue,
     onChange,

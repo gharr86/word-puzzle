@@ -137,7 +137,7 @@ const Game = ({ word }: GameProps): JSX.Element => {
       inputValue={letter.value}
       onChange={newValue => updateValue(newValue, index)}
       onKeyUp={key => handleOnKeyUp(key, index)}
-      ref={input => {
+      ref={(input: HTMLInputElement) => {
         if (input) inputRefs.current[index] = input;
       }}
     />
