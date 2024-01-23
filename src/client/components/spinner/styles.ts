@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import Div from '../div';
 
-export default styled(Div)`
+export default styled.div`
+  display: flex;
+  justify-content: center;
   position: fixed;
   z-index: 5;
   width: 100%;

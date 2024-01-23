@@ -1,7 +1,6 @@
-import { LayoutProps, FlexboxProps } from 'styled-system';
 import { GuessStatus } from '../../../types';
 
-export interface LetterProps extends LayoutProps, FlexboxProps {
+export interface AlphabetLetterProps {
   status: GuessStatus
   children: React.ReactNode
 }

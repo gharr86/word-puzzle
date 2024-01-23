@@ -15,8 +15,6 @@ const Alphabet: FC<AlphabetProps> = ({ guessWordsList }) => {
       {
         letterList.map((letter: GuessLetter) => (
           <AlphabetLetter
-            display="flex"
-            justifyContent="center"
             status={letter.status}
             key={nanoid()}
           >

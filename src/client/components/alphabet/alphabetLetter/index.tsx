@@ -1,8 +1,8 @@
-import { LetterProps } from './types';
+import { AlphabetLetterProps } from './types';
 import StyledDiv from './styles';
 
-const Letter: React.FC<LetterProps> = ({ status, children }) => (
-  <StyledDiv status={status}>{children}</StyledDiv>
+const AlphabetLetter: React.FC<AlphabetLetterProps> = ({ status, children, ...props }) => (
+  <StyledDiv status={status} {...props}>{children}</StyledDiv>
 );
 
-export default Letter;
+export default AlphabetLetter;

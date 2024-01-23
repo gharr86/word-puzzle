@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
-import Div from '../../div';
-import { LetterProps } from './types';
-
 import { getBackgroundColor } from '../../../utils';
+import { AlphabetLetterProps } from './types';
 
-export default styled(Div)<LetterProps>`
+export default styled.div<AlphabetLetterProps>`
+  display: flex;
+  justify-content: center;
   width: 20px;
   height: 20px;
   border-radius: 2px;
