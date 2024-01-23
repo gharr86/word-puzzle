@@ -1,45 +1,43 @@
-import React from 'react';
-
 import Button from '../button';
 
-import { GameOverPromptProps } from '../../types';
+import { GameOverPromptProps } from './types';
+import { Background, Prompt, Message, Word } from './styles';
 
 import { WIN_MESSAGE, LOOSE_MESSAGE, PLAY_AGAIN_TEXT } from '../../constants';
 
-const GameOverPrompt = ({
+const GameOverPrompt: React.FC<GameOverPromptProps> = ({
   onClickOutside,
   word,
   didWin,
   onClickBtn,
-}: GameOverPromptProps): JSX.Element => {
-  const winText: string = didWin
+}) => {
+  const winText = didWin
     ? WIN_MESSAGE
     : LOOSE_MESSAGE;
 
   return (
     <>
-      <div
-        className="game-over-prompt__background"
+      <Background
         role="button"
         onClick={onClickOutside}
       />
-      <div className="game-over-prompt__prompt">
-        <p className="game-over-prompt__prompt__message">
+      <Prompt>
+        <Message>
           {winText}
-        </p>
+        </Message>
         {
           !didWin
           && (
-            <p className="game-over-prompt__prompt__word">
+            <Word>
               {word}
-            </p>
+            </Word>
           )
         }
         <Button
           text={PLAY_AGAIN_TEXT}
           onClick={onClickBtn}
         />
-      </div>
+      </Prompt>
     </>
   );
 };
