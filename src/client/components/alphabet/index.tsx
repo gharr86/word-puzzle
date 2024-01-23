@@ -1,34 +1,30 @@
-import React, { CSSProperties, ReactElement } from 'react';
+import { FC } from 'react';
 import { nanoid } from 'nanoid';
 
-import { AlphabetProps, GuessLetter, GuessStatus } from '../../types';
-
+import AlphabetLetter from './alphabetLetter';
 import { getAllLetters } from './utils';
-import { getBackgroundColor } from '../../utils';
 
-const Alphabet = ({ guessWordsList }: AlphabetProps): JSX.Element => {
+import { AlphabetProps, GuessLetter } from '../../types';
+import { StyledContainer } from './styles';
+
+const Alphabet: FC<AlphabetProps> = ({ guessWordsList }) => {
   const letterList: GuessLetter[] = getAllLetters(guessWordsList);
-  const getLetterStyle = (status: GuessStatus): CSSProperties => {
-    return {
-      background: getBackgroundColor(status),
-      color: status === 'none' ? '#000' : '#FFF',
-    };
-  };
 
   return (
-    <div className="alphabet">
+    <StyledContainer>
       {
-        letterList.map((letter: GuessLetter): ReactElement => (
-          <div
-            className="alphabet__letter"
-            style={getLetterStyle(letter.status)}
+        letterList.map((letter: GuessLetter) => (
+          <AlphabetLetter
+            display="flex"
+            justifyContent="center"
+            status={letter.status}
             key={nanoid()}
           >
             {letter.value}
-          </div>
+          </AlphabetLetter>
         ))
       }
-    </div>
+    </StyledContainer>
   );
 };
 
