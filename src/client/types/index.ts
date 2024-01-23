@@ -9,12 +9,6 @@ export interface GuessLetter {
   status: GuessStatus
 }
 
-export interface LetterInputProps {
-  inputValue: string
-  onChange: (value: string) => void
-  onKeyUp: (key: string) => void
-}
-
 export interface GuessWordProps {
   letters: GuessLetter[]
 }
@@ -32,9 +26,4 @@ export interface GameOverPromptProps {
 
 export interface GameProps {
   word: string
-}
-
-export interface ButtonProps {
-  onClick: () => void
-  text: string
 }

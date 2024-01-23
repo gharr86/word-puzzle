@@ -1,4 +1,7 @@
-.spinner {
+import styled from 'styled-components';
+import Div from '../div';
+
+export default styled(Div)`
   position: fixed;
   z-index: 5;
   width: 100%;
@@ -7,5 +10,4 @@
   left: 0;
   background: #FFF;
   opacity: 0.8;
-  @include display-flex(center);
-}
+`;

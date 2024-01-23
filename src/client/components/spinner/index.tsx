@@ -1,11 +1,10 @@
-import React from 'react';
-
+import StyledContainer from './styles';
 import { CircularProgress } from '@mui/material';
 
-const Spinner = () => (
-  <div className="spinner" data-testid="spinner">
+const Spinner: React.FC<Record<string, never>> = () => (
+  <StyledContainer display="flex" justifyContent="center" data-testid="spinner">
     <CircularProgress />
-  </div>
+  </StyledContainer>
 );
 
 export default Spinner;
