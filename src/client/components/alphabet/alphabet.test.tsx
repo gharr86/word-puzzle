@@ -3,7 +3,7 @@ import { render, RenderResult } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
 import Alphabet from '.';
-import { AlphabetProps } from '../../types';
+import { AlphabetProps } from './types';
 
 const basicProps: AlphabetProps = {
   guessWordsList: [

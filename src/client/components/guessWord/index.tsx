@@ -1,24 +1,22 @@
-import React, { ReactElement } from 'react';
+import { FC } from 'react';
 import { nanoid } from 'nanoid';
 
 import { GuessLetter, GuessWordProps } from '../../types';
+import { StyledContainer, GuessWordLetter } from './styles';
 
-import { getBackgroundColor } from '../../utils';
-
-const GuessWord = ({ letters }: GuessWordProps): JSX.Element => (
-  <div className="guess-word">
+const GuessWord: FC<GuessWordProps> = ({ letters }) => (
+  <StyledContainer>
     {
-      letters.map((guessLetter: GuessLetter): ReactElement => (
-        <div
-          className="guess-word__letter"
-          style={{ background: getBackgroundColor(guessLetter.status) }}
+      letters.map((guessLetter: GuessLetter) => (
+        <GuessWordLetter
+          status={guessLetter.status}
           key={nanoid()}
         >
           {guessLetter.value}
-        </div>
+        </GuessWordLetter>
       ))
     }
-  </div>
+  </StyledContainer>
 );
 
 export default GuessWord;

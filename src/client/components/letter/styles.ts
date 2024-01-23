@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-import { getBackgroundColor } from '../../../utils';
-import { AlphabetLetterProps } from './types';
+import { getBackgroundColor } from '../../utils';
+import { LetterProps } from './types';
 
-export default styled.div<AlphabetLetterProps>`
+export default styled.div<LetterProps>`
   display: flex;
   justify-content: center;
   width: 20px;

@@ -1,10 +1,11 @@
 import { FC } from 'react';
 import { nanoid } from 'nanoid';
 
-import AlphabetLetter from './alphabetLetter';
+import Letter from '../letter';
 import { getAllLetters } from './utils';
 
-import { AlphabetProps, GuessLetter } from '../../types';
+import { GuessLetter } from '../../types';
+import { AlphabetProps } from './types';
 import { StyledContainer } from './styles';
 
 const Alphabet: FC<AlphabetProps> = ({ guessWordsList }) => {
@@ -14,12 +15,12 @@ const Alphabet: FC<AlphabetProps> = ({ guessWordsList }) => {
     <StyledContainer>
       {
         letterList.map((letter: GuessLetter) => (
-          <AlphabetLetter
+          <Letter
             status={letter.status}
             key={nanoid()}
           >
             {letter.value}
-          </AlphabetLetter>
+          </Letter>
         ))
       }
     </StyledContainer>
