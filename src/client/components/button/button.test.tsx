@@ -3,7 +3,7 @@ import { fireEvent, render, RenderResult, screen } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect';
 
 import Button from '.';
-import { ButtonProps } from '../../types';
+import { ButtonProps } from './types';
 
 const basicProps: ButtonProps = {
   onClick: jest.fn(),

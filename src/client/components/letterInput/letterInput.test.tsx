@@ -3,7 +3,7 @@ import { render, screen, RenderResult, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect';
 
 import LetterInput from '.';
-import { LetterInputProps } from '../../types';
+import { LetterInputProps } from './types';
 
 const basicProps: LetterInputProps = {
   inputValue: '',

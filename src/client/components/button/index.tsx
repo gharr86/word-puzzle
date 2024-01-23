@@ -1,7 +1,7 @@
 import StyledButton from './styles';
-import { ButtonProps } from '../../types';
+import { ButtonProps } from './types';
 
-const Button = ({ onClick, text }: ButtonProps) => (
+const Button: React.FC<ButtonProps> = ({ onClick, text }) => (
   <StyledButton
     onClick={onClick}
   >
