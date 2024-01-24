@@ -23,15 +23,15 @@ describe('getAllLetters', () => {
       },
     ],
   ];
-  const result: GuessLetter[] = getAllLetters(guessWordsList);
+  const result = getAllLetters(guessWordsList);
 
   test('incoming letter statuses are persisted in result', () => {
-    const indexOfLetter = (letter: string): number => result.findIndex(({ value }: GuessLetter) => letter === value);
+    const indexOfLetter = (letter: string) => result.findIndex(({ value }: GuessLetter) => letter === value);
 
-    const indexOfH: number = indexOfLetter('H');
-    const indexOfO: number = indexOfLetter('O');
-    const indexOfL: number = indexOfLetter('L');
-    const indexOfA: number = indexOfLetter('A');
+    const indexOfH = indexOfLetter('H');
+    const indexOfO = indexOfLetter('O');
+    const indexOfL = indexOfLetter('L');
+    const indexOfA = indexOfLetter('A');
 
     expect(result[indexOfH].status).toEqual(guessWordsList[0][0].status);
     expect(result[indexOfO].status).toEqual(guessWordsList[0][1].status);
@@ -40,13 +40,13 @@ describe('getAllLetters', () => {
   });
 
   test('status of unused letters is "none"', () => {
-    const unusedLetterStatuses: GuessLetter[] = result.filter(({ value }: GuessLetter) => (
+    const unusedLetterStatuses = result.filter(({ value }: GuessLetter) => (
       value !== guessWordsList[0][0].value
       && value !== guessWordsList[0][1].value
       && value !== guessWordsList[0][2].value
       && value !== guessWordsList[0][3].value
     ));
-    const allStatusesAreNone: boolean = unusedLetterStatuses.every(({ status }: GuessLetter) => status === 'none');
+    const allStatusesAreNone = unusedLetterStatuses.every(({ status }: GuessLetter) => status === 'none');
 
     expect(allStatusesAreNone).toBe(true);
   });

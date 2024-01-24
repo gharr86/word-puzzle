@@ -1,4 +1,4 @@
-import { GuessLetter, GuessStatus } from '../../../types';
+import { GuessLetter } from '../../../types';
 
 const allLetters: GuessLetter[] = [
   {
@@ -111,17 +111,17 @@ const allLetters: GuessLetter[] = [
   },
 ];
 
-export const getAllLetters = (guessWordsList: GuessLetter[][]): GuessLetter[] => {
+export const getAllLetters = (guessWordsList: GuessLetter[][]) => {
   if (!guessWordsList.length) return allLetters;
 
   const usedLetters: GuessLetter[] = guessWordsList.reduce((
     prevWord: GuessLetter[],
     currWord: GuessLetter[],
   ) => ([...prevWord, ...currWord]));
-  const usedLettersWithoutRepeat: GuessLetter[] = Array.from(new Set(usedLetters));
+  const usedLettersWithoutRepeat = Array.from(new Set(usedLetters));
 
-  return allLetters.map((letter: GuessLetter): GuessLetter => {
-    const status: GuessStatus = usedLettersWithoutRepeat.find(({ value }: GuessLetter) => value === letter.value)?.status
+  return allLetters.map((letter: GuessLetter) => {
+    const status = usedLettersWithoutRepeat.find(({ value }: GuessLetter) => value === letter.value)?.status
       || letter.status;
 
     return {
