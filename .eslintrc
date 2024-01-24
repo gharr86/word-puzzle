@@ -32,6 +32,8 @@
     "camelcase": 0,
     "eslint-plugin-import/prefer-default-export": 0,
     "function-paren-newline": 0,
+    "import/named": 0,
+    "jest/expect-expect": 0,
     "linebreak-style": 1,
     "semi": 0
   },
