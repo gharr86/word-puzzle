@@ -1,30 +1,30 @@
-import { Letter, GuessStatus, GuessLetter } from '../../../types';
+import { LetterElement, GuessStatus, GuessLetter } from '../../../types';
 
-export const arrayValuesAreEqual = (arr1: string[], arr2: string[]): boolean => (
-  arr1.every((letter: string, index: number): boolean => arr2[index] === letter)
+export const arrayValuesAreEqual = (arr1: string[], arr2: string[]) => (
+  arr1.every((letter: string, index: number) => arr2[index] === letter)
 );
 
-export const getInitialInputList = (word: string): Letter[] => (
+export const getInitialInputList = (word: string): LetterElement[] => (
   word
     .split('')
-    .map((): Letter => ({ value: '' }))
+    .map(() => ({ value: '' }))
 );
 
-export const getValues = (inputList: Letter[]): string[] => inputList.map(({ value }): string => value);
+export const getValues = (inputList: LetterElement[]) => inputList.map(({ value }) => value);
 
 const getOccurrenceIndexes = (
   word: string[],
   letter: string,
   indexCut: number | null = null,
-): number[] => {
+) => {
   const letterOccurrenceIndexes: number[] = [];
-  let wordArray: string[] = [...word];
+  let wordArray = [...word];
 
   if (typeof indexCut === 'number') {
     wordArray = word.slice(0, indexCut + 1);
   }
 
-  wordArray.forEach((wordLetter: string, wordLetterIndex: number): void => {
+  wordArray.forEach((wordLetter: string, wordLetterIndex: number) => {
     if (wordLetter === letter) letterOccurrenceIndexes.push(wordLetterIndex);
   });
   
@@ -34,17 +34,17 @@ const getOccurrenceIndexes = (
 export const getGuess = (
   guessValuesArray: string[],
   wordArray: string[],
-) => guessValuesArray.map((letter: string, index: number): GuessLetter => {
+): GuessLetter[] => guessValuesArray.map((letter: string, index: number) => {
   const letterOccurrencesInWord: number[] = getOccurrenceIndexes(wordArray, letter);
   const letterIsInWord = Boolean(letterOccurrencesInWord.length);
 
   let status: GuessStatus = 'incorrect';
 
   if (letterIsInWord) {
-    const moreThanOneOccurrenceInWord: boolean = letterOccurrencesInWord.length > 1;
-    const letterOccurrencesInGuessUntilNow: number[] = getOccurrenceIndexes(guessValuesArray, letter, index);
-    const noMoreOccurrencesLeft: boolean = letterOccurrencesInGuessUntilNow.length > letterOccurrencesInWord.length;
-    const letterIsInCorrectPosition: boolean = letterOccurrencesInWord.includes(index);
+    const moreThanOneOccurrenceInWord = letterOccurrencesInWord.length > 1;
+    const letterOccurrencesInGuessUntilNow = getOccurrenceIndexes(guessValuesArray, letter, index);
+    const noMoreOccurrencesLeft = letterOccurrencesInGuessUntilNow.length > letterOccurrencesInWord.length;
+    const letterIsInCorrectPosition = letterOccurrencesInWord.includes(index);
 
     if (letterIsInCorrectPosition) {
       if (moreThanOneOccurrenceInWord) {
@@ -56,7 +56,7 @@ export const getGuess = (
       if (moreThanOneOccurrenceInWord) {
         status = noMoreOccurrencesLeft ? 'incorrect' : 'wrong-position';
       } else {
-        const letterOccurrencesInGuess: number[] = getOccurrenceIndexes(guessValuesArray, letter);
+        const letterOccurrencesInGuess = getOccurrenceIndexes(guessValuesArray, letter);
 
         status = letterOccurrencesInGuess.length > 1
           ? 'incorrect'

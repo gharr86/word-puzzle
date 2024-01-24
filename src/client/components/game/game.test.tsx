@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, RenderResult, screen, fireEvent, Screen, waitForElementToBeRemoved } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { AxiosResponse } from 'axios';
@@ -6,7 +5,7 @@ import { AxiosResponse } from 'axios';
 import Game from '.';
 import ApiService from '../../services/apiService';
 
-import { GameProps } from '../../types';
+import { GameProps } from './types';
 
 import {
   CORRECT_COLOR,
@@ -35,14 +34,14 @@ const renderGame = (newProps: Partial<GameProps> = {}): RenderResult => {
 
 const getMockResp = (data: boolean): Partial<AxiosResponse> => ({ data });
 const getFakeChangeEvent = (value: string) => ({ target: { value } });
-const enterBadGuess = (_screen: Screen): void => {
+const enterBadGuess = (_screen: Screen) => {
   fireEvent.change(_screen.getAllByRole('textbox')[0], getFakeChangeEvent('l'));
   fireEvent.change(_screen.getAllByRole('textbox')[1], getFakeChangeEvent('i'));
   fireEvent.change(_screen.getAllByRole('textbox')[2], getFakeChangeEvent('j'));
   fireEvent.change(_screen.getAllByRole('textbox')[3], getFakeChangeEvent('a'));
   fireEvent.change(_screen.getAllByRole('textbox')[4], getFakeChangeEvent('r'));
 };
-const enterGoodGuess = (_screen: Screen): void => {
+const enterGoodGuess = (_screen: Screen) => {
   fireEvent.change(_screen.getAllByRole('textbox')[0], getFakeChangeEvent('v'));
   fireEvent.change(_screen.getAllByRole('textbox')[1], getFakeChangeEvent('i'));
   fireEvent.change(_screen.getAllByRole('textbox')[2], getFakeChangeEvent('a'));
@@ -63,7 +62,7 @@ describe('<Game />', () => {
 
   test('when a non-letter value is entered, input is not changed', () => {
     renderGame();
-    const firstInput: HTMLElement = screen.getAllByRole('textbox')[0];
+    const firstInput = screen.getAllByRole('textbox')[0];
 
     fireEvent.change(firstInput, getFakeChangeEvent('5'));
 

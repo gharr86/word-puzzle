@@ -1,7 +1,8 @@
 import { FC } from 'react';
 import { nanoid } from 'nanoid';
 
-import { GuessLetter, GuessWordProps } from '../../types';
+import { GuessLetter } from '../../types';
+import { GuessWordProps } from './types';
 import { StyledContainer, GuessWordLetter } from './styles';
 
 const GuessWord: FC<GuessWordProps> = ({ letters }) => (

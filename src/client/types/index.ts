@@ -1,18 +1,10 @@
 export type GuessStatus = 'correct' | 'wrong-position' | 'incorrect' | 'none';
 
-export interface Letter {
+export interface LetterElement {
   value: string
 }
 
 export interface GuessLetter {
   value: string
   status: GuessStatus
-}
-
-export interface GuessWordProps {
-  letters: GuessLetter[]
-}
-
-export interface GameProps {
-  word: string
 }

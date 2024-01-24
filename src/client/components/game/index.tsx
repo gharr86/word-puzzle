@@ -1,4 +1,4 @@
-import { ReactElement, useState, useRef, useEffect, useCallback } from 'react';
+import { FC, useState, useRef, useEffect, useCallback } from 'react';
 import { nanoid } from 'nanoid';
 
 import LetterInput from '../letterInput';
@@ -8,7 +8,8 @@ import GameOverPrompt from '../gameOverPrompt';
 import Spinner from '../spinner';
 import Button from '../button';
 
-import { Letter, GuessLetter, GameProps } from '../../types';
+import { LetterElement, GuessLetter } from '../../types';
+import { GameProps } from './types';
 import { GameSection, InputsSection, Message, GuessSection, GuessList, GuessWordContainer, GuessNumber } from './styles';
 
 import ApiService from '../../services/apiService';
@@ -16,8 +17,8 @@ import { MAX_GUESSES, WRONG_WORD_MESSAGE, RESTART_TEXT } from '../../constants';
 
 import { getInitialInputList, getValues, getGuess, arrayValuesAreEqual } from './utils';
 
-const Game = ({ word }: GameProps): JSX.Element => {
-  const [inputList, setInputList] = useState<Letter[]>(getInitialInputList(word));
+const Game: FC<GameProps> = ({ word }) => {
+  const [inputList, setInputList] = useState<LetterElement[]>(getInitialInputList(word));
   const [guessList, setGuessList] = useState<GuessLetter[][]>([]);
   const [didWin, setDidWin] = useState<boolean>(false);
   const [showGameOverPrompt, setShowGameOverPrompt] = useState<boolean>(false);
@@ -26,21 +27,21 @@ const Game = ({ word }: GameProps): JSX.Element => {
 
   const inputRefs = useRef<HTMLInputElement[]>([]);
 
-  const resetInputs = useCallback((): void => {
+  const resetInputs = useCallback(() => {
     setInputList(getInitialInputList(word));
     inputRefs.current[0]?.focus();
   }, [word]);
 
-  const reloadWindow = (): void => window.location.reload();
+  const reloadWindow = () => window.location.reload();
 
   useEffect(() => {
     inputRefs.current[0]?.focus();
   }, []);
 
   useEffect(() => {
-    const guessArray: string[] = getValues(inputList);
-    const wordArray: string[] = word.split('');
-    const guessIsCorrect: boolean = arrayValuesAreEqual(guessArray, wordArray);
+    const guessArray = getValues(inputList);
+    const wordArray = word.split('');
+    const guessIsCorrect = arrayValuesAreEqual(guessArray, wordArray);
 
     if (guessIsCorrect) {
       setDidWin(true);
@@ -60,8 +61,8 @@ const Game = ({ word }: GameProps): JSX.Element => {
       const { data: wordExists } = await ApiService.checkWord(guessWord);
 
       if (wordExists) {
-        const guessArray: string[] = getValues(inputList);
-        const wordArray: string[] = word.split('');
+        const guessArray = getValues(inputList);
+        const wordArray = word.split('');
         const guessObj: GuessLetter[] = getGuess(guessArray, wordArray);
     
         setGuessList((prevGuessList: GuessLetter[][]) => ([
@@ -79,13 +80,13 @@ const Game = ({ word }: GameProps): JSX.Element => {
   }, [word, inputList]);
 
   useEffect(() => {
-    const guessArray: string[] = getValues(inputList);
-    const nextEmptyIndex: number = guessArray.findIndex((value): boolean => value.length === 0);
+    const guessArray = getValues(inputList);
+    const nextEmptyIndex = guessArray.findIndex((value): boolean => value.length === 0);
 
     if (nextEmptyIndex !== -1) {
       inputRefs.current[nextEmptyIndex].focus();
     } else {
-      const guessWord: string = guessArray.join('');
+      const guessWord = guessArray.join('');
 
       checkWord(guessWord);
     }
@@ -104,13 +105,12 @@ const Game = ({ word }: GameProps): JSX.Element => {
     };
   }, [showMessage]);
 
-  const updateValue = (newValue: string, index: number): void => {
-    console.log('updateValue');
+  const updateValue = (newValue: string, index: number) => {
     const pattern = new RegExp(/^[ña-zÑA-Z]*$/g);
 
     if (pattern.test(newValue)) {
-      const currentInputList: Letter[] = [...inputList];
-      const newTargetInput: Letter = {
+      const currentInputList = [...inputList];
+      const newTargetInput: LetterElement = {
         ...currentInputList[index],
         value: newValue.toUpperCase(),
       };
@@ -121,8 +121,7 @@ const Game = ({ word }: GameProps): JSX.Element => {
     }
   };
 
-  const handleOnKeyUp = (key: string, index: number): void => {
-    console.log('handleOnKeyUp');
+  const handleOnKeyUp = (key: string, index: number) => {
     if (key === 'Backspace') {
       if (index === inputList.length - 1 && inputList[index].value) {
         updateValue('', index);
@@ -132,7 +131,7 @@ const Game = ({ word }: GameProps): JSX.Element => {
     }
   };
 
-  const renderInputList: JSX.Element[] = inputList.map((letter: Letter, index: number): ReactElement => (
+  const renderInputList = inputList.map((letter: LetterElement, index: number) => (
     <LetterInput
       key={nanoid()}
       inputValue={letter.value}
@@ -144,7 +143,7 @@ const Game = ({ word }: GameProps): JSX.Element => {
     />
   ));
 
-  const renderGuessList: JSX.Element[] = guessList.map((guessWordArray: GuessLetter[], index: number): ReactElement => {
+  const renderGuessList = guessList.map((guessWordArray: GuessLetter[], index: number) => {
     const guessNumber = `${index + 1}.`;
 
     return (
