@@ -28,12 +28,12 @@
     "project": "./tsconfig.eslint.json"
   },
   "rules": {
-    "arrow-parens": ["warn", "always"],
-    "arrow-body-style": "error",
-    "camelcase": "off",
-    "eslint-plugin-import/prefer-default-export": "off",
-    "function-paren-newline": "off",
-    "linebreak-style": ["error"]
+    "arrow-body-style": 1,
+    "camelcase": 0,
+    "eslint-plugin-import/prefer-default-export": 0,
+    "function-paren-newline": 0,
+    "linebreak-style": 1,
+    "semi": 0
   },
   "ignorePatterns": [".eslintrc.js", "src/client/setupTests.ts"]
 }

@@ -1,5 +1,5 @@
-import StyledButton from './styles';
-import { ButtonProps } from './types';
+import StyledButton from './styles'
+import { ButtonProps } from './types'
 
 const Button: React.FC<ButtonProps> = ({ onClick, text }) => (
   <StyledButton
@@ -7,6 +7,6 @@ const Button: React.FC<ButtonProps> = ({ onClick, text }) => (
   >
     {text}
   </StyledButton>
-);
+)
 
-export default Button;
+export default Button

@@ -1,9 +1,9 @@
-import Button from '../button';
+import Button from '../button'
 
-import { GameOverPromptProps } from './types';
-import { Background, Prompt, Message, Word } from './styles';
+import { GameOverPromptProps } from './types'
+import { Background, Prompt, Message, Word } from './styles'
 
-import { WIN_MESSAGE, LOOSE_MESSAGE, PLAY_AGAIN_TEXT } from '../../constants';
+import { WIN_MESSAGE, LOOSE_MESSAGE, PLAY_AGAIN_TEXT } from '../../constants'
 
 const GameOverPrompt: React.FC<GameOverPromptProps> = ({
   onClickOutside,
@@ -13,7 +13,7 @@ const GameOverPrompt: React.FC<GameOverPromptProps> = ({
 }) => {
   const winText = didWin
     ? WIN_MESSAGE
-    : LOOSE_MESSAGE;
+    : LOOSE_MESSAGE
 
   return (
     <>
@@ -39,7 +39,7 @@ const GameOverPrompt: React.FC<GameOverPromptProps> = ({
         />
       </Prompt>
     </>
-  );
-};
+  )
+}
 
-export default GameOverPrompt;
+export default GameOverPrompt

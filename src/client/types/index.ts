@@ -1,4 +1,4 @@
-export type GuessStatus = 'correct' | 'wrong-position' | 'incorrect' | 'none';
+export type GuessStatus = 'correct' | 'wrong-position' | 'incorrect' | 'none'
 
 export interface LetterElement {
   value: string

@@ -1,8 +1,8 @@
-import express, { Router } from 'express';
-import wordsRouter from './words';
+import express, { Router } from 'express'
+import wordsRouter from './words'
 
-const router: Router = express.Router();
+const router: Router = express.Router()
 
-router.use('/words', wordsRouter);
+router.use('/words', wordsRouter)
 
-export default router;
+export default router

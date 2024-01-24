@@ -1,29 +1,29 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react'
 
-import Game from '../game';
-import Spinner from '../spinner';
+import Game from '../game'
+import Spinner from '../spinner'
 
-import ApiService from '../../services/apiService';
-import { WORD_LENGTH, MAIN_TITLE } from '../../constants';
+import ApiService from '../../services/apiService'
+import { WORD_LENGTH, MAIN_TITLE } from '../../constants'
 
-import { MainSection, Title } from './styles';
+import { MainSection, Title } from './styles'
 
 const Main = (): JSX.Element => {
-  const [word, setWord] = useState<string | null>(null);
+  const [word, setWord] = useState<string | null>(null)
 
   const getWord = useCallback(async () => {
     try {
-      const { data } = await ApiService.getWord(WORD_LENGTH);
+      const { data } = await ApiService.getWord(WORD_LENGTH)
 
-      setWord(data);
+      setWord(data)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
-    getWord();
-  }, [getWord]);
+    getWord()
+  }, [getWord])
   
 
   return (
@@ -37,7 +37,7 @@ const Main = (): JSX.Element => {
           : <Spinner />
       }
     </MainSection>
-  );
-};
+  )
+}
 
-export default Main;
+export default Main

@@ -1,14 +1,14 @@
-import { forwardRef } from 'react';
+import { forwardRef } from 'react'
 
-import StyledInput from './styles';
-import { LetterInputProps } from './types';
+import StyledInput from './styles'
+import { LetterInputProps } from './types'
 
 const LetterInput = forwardRef<HTMLInputElement, LetterInputProps>((props, ref) => {
   const {
     inputValue,
     onChange,
     onKeyUp,
-  } = props;
+  } = props
 
   return (
     <StyledInput
@@ -18,7 +18,7 @@ const LetterInput = forwardRef<HTMLInputElement, LetterInputProps>((props, ref) 
       onChange={({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => onChange(value)}
       onKeyUp={({ key }: React.KeyboardEvent<HTMLInputElement>) => onKeyUp(key)}
     />
-  );
-});
+  )
+})
 
-export default LetterInput;
+export default LetterInput

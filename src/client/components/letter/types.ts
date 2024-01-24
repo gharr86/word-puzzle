@@ -1,4 +1,4 @@
-import { GuessStatus } from '../../types';
+import { GuessStatus } from '../../types'
 
 export interface LetterProps {
   status: GuessStatus

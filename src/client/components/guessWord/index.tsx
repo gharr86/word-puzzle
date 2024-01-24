@@ -1,9 +1,9 @@
-import { FC } from 'react';
-import { nanoid } from 'nanoid';
+import { FC } from 'react'
+import { nanoid } from 'nanoid'
 
-import { GuessLetter } from '../../types';
-import { GuessWordProps } from './types';
-import { StyledContainer, GuessWordLetter } from './styles';
+import { GuessLetter } from '../../types'
+import { GuessWordProps } from './types'
+import { StyledContainer, GuessWordLetter } from './styles'
 
 const GuessWord: FC<GuessWordProps> = ({ letters }) => (
   <StyledContainer>
@@ -18,6 +18,6 @@ const GuessWord: FC<GuessWordProps> = ({ letters }) => (
       ))
     }
   </StyledContainer>
-);
+)
 
-export default GuessWord;
+export default GuessWord

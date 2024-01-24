@@ -1,9 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
 
-import { default as GlobalStyles } from './styles/globalStyles';
+import { default as GlobalStyles } from './styles/globalStyles'
 
-import Main from './components/main';
+import Main from './components/main'
 
 ReactDOM.render(
   <React.StrictMode>
@@ -11,4 +11,4 @@ ReactDOM.render(
     <Main />
   </React.StrictMode>,
   document.getElementById('root'),
-);
+)

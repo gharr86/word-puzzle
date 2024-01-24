@@ -1,4 +1,4 @@
-import { GuessLetter } from '../../types';
+import { GuessLetter } from '../../types'
 
 export interface AlphabetProps {
   guessWordsList: GuessLetter[][]

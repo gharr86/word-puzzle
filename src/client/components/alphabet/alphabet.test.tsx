@@ -1,8 +1,8 @@
-import { render, RenderResult } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
+import { render, RenderResult } from '@testing-library/react'
+import '@testing-library/jest-dom/extend-expect'
 
-import Alphabet from '.';
-import { AlphabetProps } from './types';
+import Alphabet from '.'
+import { AlphabetProps } from './types'
 
 const basicProps: AlphabetProps = {
   guessWordsList: [
@@ -25,19 +25,19 @@ const basicProps: AlphabetProps = {
       },
     ],
   ],
-};
+}
 
 const renderAlphabet = (newProps: Partial<AlphabetProps> = {}): RenderResult => {
   const props = {
     ...basicProps,
     ...newProps,
-  };
+  }
 
-  return render(<Alphabet {...props} />);
-};
+  return render(<Alphabet {...props} />)
+}
 
 describe('<Alphabet />', () => {
   test('basic render', () => {
-    renderAlphabet();
-  });
-});
+    renderAlphabet()
+  })
+})

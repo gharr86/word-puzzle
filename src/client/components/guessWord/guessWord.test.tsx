@@ -1,8 +1,8 @@
-import { render, RenderResult } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
+import { render, RenderResult } from '@testing-library/react'
+import '@testing-library/jest-dom/extend-expect'
 
-import GuessWord from '.';
-import { GuessWordProps } from './types';
+import GuessWord from '.'
+import { GuessWordProps } from './types'
 
 const basicProps: GuessWordProps = {
   letters: [
@@ -23,19 +23,19 @@ const basicProps: GuessWordProps = {
       status: 'correct',
     },
   ],
-};
+}
 
 const renderGuessWord = (newProps: Partial<GuessWordProps> = {}): RenderResult => {
   const props = {
     ...basicProps,
     ...newProps,
-  };
+  }
 
-  return render(<GuessWord {...props} />);
-};
+  return render(<GuessWord {...props} />)
+}
 
 describe('<GuessWord />', () => {
   test('basic render', () => {
-    renderGuessWord();
-  });
-});
+    renderGuessWord()
+  })
+})

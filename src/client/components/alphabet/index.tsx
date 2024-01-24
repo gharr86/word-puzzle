@@ -1,15 +1,15 @@
-import { FC } from 'react';
-import { nanoid } from 'nanoid';
+import { FC } from 'react'
+import { nanoid } from 'nanoid'
 
-import Letter from '../letter';
-import { getAllLetters } from './utils';
+import Letter from '../letter'
+import { getAllLetters } from './utils'
 
-import { GuessLetter } from '../../types';
-import { AlphabetProps } from './types';
-import { StyledContainer } from './styles';
+import { GuessLetter } from '../../types'
+import { AlphabetProps } from './types'
+import { StyledContainer } from './styles'
 
 const Alphabet: FC<AlphabetProps> = ({ guessWordsList }) => {
-  const letterList: GuessLetter[] = getAllLetters(guessWordsList);
+  const letterList: GuessLetter[] = getAllLetters(guessWordsList)
 
   return (
     <StyledContainer>
@@ -24,7 +24,7 @@ const Alphabet: FC<AlphabetProps> = ({ guessWordsList }) => {
         ))
       }
     </StyledContainer>
-  );
-};
+  )
+}
 
-export default Alphabet;
+export default Alphabet

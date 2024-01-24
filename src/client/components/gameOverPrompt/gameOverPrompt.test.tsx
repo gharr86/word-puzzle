@@ -1,59 +1,59 @@
-import { fireEvent, render, RenderResult, screen } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
+import { fireEvent, render, RenderResult, screen } from '@testing-library/react'
+import '@testing-library/jest-dom/extend-expect'
 
-import GameOverPrompt from '.';
-import { GameOverPromptProps } from './types';
+import GameOverPrompt from '.'
+import { GameOverPromptProps } from './types'
 
-import { WIN_MESSAGE, LOOSE_MESSAGE } from '../../constants';
+import { WIN_MESSAGE, LOOSE_MESSAGE } from '../../constants'
 
 const basicProps: GameOverPromptProps = {
   onClickOutside: jest.fn(),
   word: 'VIAJE',
   didWin: false,
   onClickBtn: jest.fn(),
-};
+}
 
 const renderGameOverPrompt = (newProps: Partial<GameOverPromptProps> = {}): RenderResult => {
   const props = {
     ...basicProps,
     ...newProps,
-  };
+  }
 
-  return render(<GameOverPrompt {...props} />);
-};
+  return render(<GameOverPrompt {...props} />)
+}
 
 describe('<GameOverPrompt />', () => {
   test('basic render', () => {
-    renderGameOverPrompt();
-  });
+    renderGameOverPrompt()
+  })
 
   test('when didWin is false, loose message is rendered and word is shown', () => {
-    renderGameOverPrompt();
+    renderGameOverPrompt()
 
-    expect(screen.getByText(LOOSE_MESSAGE)).toBeInTheDocument();
-    expect(screen.getByText(basicProps.word)).toBeInTheDocument();
-  });
+    expect(screen.getByText(LOOSE_MESSAGE)).toBeInTheDocument()
+    expect(screen.getByText(basicProps.word)).toBeInTheDocument()
+  })
 
   test('when didWin is true, win message is rendered and word is not shown', () => {
-    renderGameOverPrompt({ didWin: true });
+    renderGameOverPrompt({ didWin: true })
 
-    expect(screen.getByText(WIN_MESSAGE)).toBeInTheDocument();
-    expect(screen.queryByText(basicProps.word)).not.toBeInTheDocument();
-  });
+    expect(screen.getByText(WIN_MESSAGE)).toBeInTheDocument()
+    expect(screen.queryByText(basicProps.word)).not.toBeInTheDocument()
+  })
 
   test('when background is clicked, onClickOutside prop is called', () => {
-    renderGameOverPrompt();
+    renderGameOverPrompt()
 
-    fireEvent.click(screen.getAllByRole('button')[0]);
+    fireEvent.click(screen.getAllByRole('button')[0])
 
-    expect(basicProps.onClickOutside).toHaveBeenCalled();
-  });
+    expect(basicProps.onClickOutside).toHaveBeenCalled()
+  })
 
   test('when restart button is clicked, onClickOutside prop is called', () => {
-    renderGameOverPrompt();
+    renderGameOverPrompt()
 
-    fireEvent.click(screen.getAllByRole('button')[1]);
+    fireEvent.click(screen.getAllByRole('button')[1])
 
-    expect(basicProps.onClickBtn).toHaveBeenCalled();
-  });
-});
+    expect(basicProps.onClickBtn).toHaveBeenCalled()
+  })
+})
