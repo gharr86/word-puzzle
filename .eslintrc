@@ -1,15 +1,18 @@
 {
   "extends": [
+    "eslint:recommended",
     "airbnb-typescript",
     "airbnb/hooks",
     "plugin:@typescript-eslint/recommended",
-    "plugin:jest/recommended"
+    "plugin:jest/recommended",
+    "plugin:import/recommended",
+    "prettier"
   ],
-  "plugins": ["react", "@typescript-eslint", "jest", "import"],
+  "plugins": ["react", "@typescript-eslint", "jest", "import", "prettier"],
   "env": {
     "browser": true,
-    "es6": true,
-    "jest": true
+    "es2021": true,
+    "jest/globals": true
   },
   "globals": {
     "Atomics": "readonly",
@@ -25,7 +28,12 @@
     "project": "./tsconfig.eslint.json"
   },
   "rules": {
-    "linebreak-style": "off"
+    "arrow-parens": ["warn", "always"],
+    "arrow-body-style": "error",
+    "camelcase": "off",
+    "eslint-plugin-import/prefer-default-export": "off",
+    "function-paren-newline": "off",
+    "linebreak-style": ["error"]
   },
-  "ignorePatterns": [".eslintrc.js"]
+  "ignorePatterns": [".eslintrc.js", "src/client/setupTests.ts"]
 }
