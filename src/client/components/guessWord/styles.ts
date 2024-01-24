@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
+import { displayFlex } from '../../styles';
 import Letter from '../letter';
 import { LetterProps } from '../letter/types';
 
 export const StyledContainer = styled.div`
-  display: flex;
-  justify-content: flex-start;
+  ${displayFlex('flex-start')}
   gap: 3px;
 `;
 

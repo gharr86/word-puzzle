@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
+import { displayFlex } from '../../styles';
+
 export default styled.div`
-  display: flex;
-  justify-content: center;
+  ${displayFlex('center')}
   position: fixed;
   z-index: 5;
   width: 100%;

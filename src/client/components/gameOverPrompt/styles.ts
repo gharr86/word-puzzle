@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
+import { displayFlex } from '../../styles';
+
 export const Background = styled.div`
-  display: flex;
-  justify-content: center;
+  ${displayFlex('center')}
   position: fixed;
   z-index: 1;
   left: 0;
@@ -14,10 +15,7 @@ export const Background = styled.div`
 `;
 
 export const Prompt = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-flow: column nowrap;
+  ${displayFlex('center', 'center', 'column nowrap')}
   position: fixed;
   z-index: 2;
   left: 50%;
