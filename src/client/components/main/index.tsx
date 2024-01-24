@@ -1,10 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import Game from '../game';
 import Spinner from '../spinner';
 
 import ApiService from '../../services/apiService';
 import { WORD_LENGTH, MAIN_TITLE } from '../../constants';
+
+import { MainSection, Title } from './styles';
 
 const Main = (): JSX.Element => {
   const [word, setWord] = useState<string | null>(null);
@@ -25,16 +27,16 @@ const Main = (): JSX.Element => {
   
 
   return (
-    <main className="main">
-      <h1 className="main__title">
+    <MainSection>
+      <Title>
         {MAIN_TITLE}
-      </h1>
+      </Title>
       {
         word?.length
           ? <Game word={word} />
           : <Spinner />
       }
-    </main>
+    </MainSection>
   );
 };
 

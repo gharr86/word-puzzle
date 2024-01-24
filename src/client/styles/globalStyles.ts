@@ -1,0 +1,28 @@
+import { createGlobalStyle } from 'styled-components';
+
+export default createGlobalStyle`
+  * {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+
+  ul, nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  ol {
+    list-style-position: inside;
+    padding: 0; 
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+`;
