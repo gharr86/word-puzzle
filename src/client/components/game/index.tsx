@@ -156,7 +156,7 @@ const Game: FC<GameProps> = ({ word }) => {
 
   return (
     <>
-      <GameSection>
+      <GameSection data-testid="game">
         <InputsSection>
           {renderInputList}
           {
