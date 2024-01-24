@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, useRef, useEffect, useCallback } from 'react';
+import { ReactElement, useState, useRef, useEffect, useCallback } from 'react';
 import { nanoid } from 'nanoid';
 
 import LetterInput from '../letterInput';
@@ -9,6 +9,7 @@ import Spinner from '../spinner';
 import Button from '../button';
 
 import { Letter, GuessLetter, GameProps } from '../../types';
+import { GameSection, InputsSection, Message, GuessSection, GuessList, GuessWordContainer, GuessNumber } from './styles';
 
 import ApiService from '../../services/apiService';
 import { MAX_GUESSES, WRONG_WORD_MESSAGE, RESTART_TEXT } from '../../constants';
@@ -147,36 +148,34 @@ const Game = ({ word }: GameProps): JSX.Element => {
     const guessNumber = `${index + 1}.`;
 
     return (
-      <div className="guess-word-container" key={nanoid()}>
-        <span className="guess-word-container__guess-number">{guessNumber}</span>
+      <GuessWordContainer key={nanoid()}>
+        <GuessNumber>{guessNumber}</GuessNumber>
         <GuessWord key={nanoid()} letters={guessWordArray} />
-      </div>
+      </GuessWordContainer>
     );
   });
 
   return (
     <>
-      <section className="game" data-testid="game">
-        <section className="game__input-list-container">
+      <GameSection>
+        <InputsSection>
           {renderInputList}
           {
             showMessage
-            && <div className="message">{WRONG_WORD_MESSAGE}</div>
+            && <Message>{WRONG_WORD_MESSAGE}</Message>
           }
-        </section>
-        <section className="game__guess-container">
-          <div className="game__guess-container__guess-list">
+        </InputsSection>
+        <GuessSection>
+          <GuessList>
             {renderGuessList}
-          </div>
-          <div className="game__guess-container__alphabet">
-            <Alphabet guessWordsList={guessList} />
-          </div>
-        </section>
+          </GuessList>
+          <Alphabet guessWordsList={guessList} />
+        </GuessSection>
         <Button
           text={RESTART_TEXT}
           onClick={reloadWindow}
         />
-      </section>
+      </GameSection>
       {
         showGameOverPrompt
         && (

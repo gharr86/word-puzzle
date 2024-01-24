@@ -1,5 +1,3 @@
-@import '../game/game';
-
 .main {
   min-height: 100vh;
   @include display-flex(flex-start, center, column nowrap);
