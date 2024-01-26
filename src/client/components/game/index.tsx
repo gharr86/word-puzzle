@@ -134,9 +134,9 @@ const Game: FC<GameProps> = ({ word }) => {
   const renderInputList = inputList.map((letter: LetterElement, index: number) => (
     <LetterInput
       key={nanoid()}
-      inputValue={letter.value}
-      onChange={newValue => updateValue(newValue, index)}
-      onKeyUp={key => handleOnKeyUp(key, index)}
+      value={letter.value}
+      onChange={({ target: { value: newValue } }) => updateValue(newValue, index)}
+      onKeyUp={({ key }) => handleOnKeyUp(key, index)}
       ref={(input: HTMLInputElement) => {
         if (input) inputRefs.current[index] = input
       }}
