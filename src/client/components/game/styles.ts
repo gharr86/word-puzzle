@@ -10,6 +10,8 @@ export const GameSection = styled.section`
 export const InputsSection = styled.section`
   position: relative;
   margin-bottom: 20px;
+  ${displayFlex('center')}
+  gap: 10px;
 `
 
 export const Message = styled.div`

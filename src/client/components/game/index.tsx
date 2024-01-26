@@ -13,7 +13,7 @@ import { GameProps } from './types'
 import { GameSection, InputsSection, Message, GuessSection, GuessList, GuessWordContainer, GuessNumber } from './styles'
 
 import ApiService from '../../services/apiService'
-import { MAX_GUESSES, WRONG_WORD_MESSAGE, RESTART_TEXT } from '../../constants'
+import { MAX_GUESSES, WRONG_WORD_MESSAGE, RESTART_TEXT, SUBMIT_BTN_TEXT } from '../../constants'
 
 import { getInitialInputList, getValues, getGuess, arrayValuesAreEqual } from './utils'
 
@@ -158,7 +158,11 @@ const Game: FC<GameProps> = ({ word }) => {
     <>
       <GameSection data-testid="game">
         <InputsSection>
-          {renderInputList}
+          <div>{renderInputList}</div>
+          <Button
+            text={SUBMIT_BTN_TEXT}
+            onClick={() => checkWord}
+          />
           {
             showMessage
             && <Message>{WRONG_WORD_MESSAGE}</Message>

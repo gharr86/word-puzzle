@@ -9,6 +9,7 @@ export const WORD_LENGTH = 5
 
 // STRINGS
 export const MAIN_TITLE = 'Adivina la palabra'
+export const SUBMIT_BTN_TEXT = '✔'
 export const WIN_MESSAGE = 'Ganaste!! :)'
 export const LOOSE_MESSAGE = 'Perdiste :('
 export const RESTART_TEXT = 'Reiniciar juego'
