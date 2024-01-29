@@ -27,6 +27,10 @@ const Game: FC<GameProps> = ({ word }) => {
 
   const inputRefs = useRef<HTMLInputElement[]>([])
 
+  useEffect(() => {
+    inputRefs.current[0]?.focus()
+  }, [])
+
   const resetInputs = useCallback(() => {
     setInputList(getInitialInputList(word))
     inputRefs.current[0]?.focus()
@@ -35,12 +39,8 @@ const Game: FC<GameProps> = ({ word }) => {
   const reloadWindow = () => window.location.reload()
 
   useEffect(() => {
-    inputRefs.current[0]?.focus()
-  }, [])
-
-  useEffect(() => {
-    const guessArray = getValues(inputList)
     const wordArray = word.split('')
+    const guessArray = getValues(inputList)
     const guessIsCorrect = arrayValuesAreEqual(guessArray, wordArray)
 
     if (guessIsCorrect) {
@@ -61,8 +61,8 @@ const Game: FC<GameProps> = ({ word }) => {
       const { data: wordExists } = await ApiService.checkWord(guessWord)
 
       if (wordExists) {
-        const guessArray = getValues(inputList)
         const wordArray = word.split('')
+        const guessArray = getValues(inputList)
         const guessObj: GuessLetter[] = getGuess(guessArray, wordArray)
     
         setGuessList((prevGuessList: GuessLetter[][]) => ([
@@ -80,20 +80,20 @@ const Game: FC<GameProps> = ({ word }) => {
   }, [word, inputList])
 
   useEffect(() => {
+    const allInputsAreFilled = inputRefs.current.every(({ value }) => value)
     const guessArray = getValues(inputList)
-    const nextEmptyIndex = guessArray.findIndex((value): boolean => value.length === 0)
+    const nextEmptyInputIndex = guessArray.findIndex((value) => !value)
 
-    if (nextEmptyIndex !== -1) {
-      inputRefs.current[nextEmptyIndex].focus()
+    if (!allInputsAreFilled) {
+      inputRefs.current[nextEmptyInputIndex].focus()
     } else {
-      const guessWord = guessArray.join('')
-
-      checkWord(guessWord)
+      inputRefs.current[inputList.length - 1].focus()
     }
-  }, [inputList, checkWord])
+  }, [inputList])
 
   useEffect(() => {
     let timer: NodeJS.Timeout
+    const inputRefsList = inputRefs.current
 
     if (showMessage) {
       timer = setTimeout(() => setShowMessage(false), 1000)
@@ -101,9 +101,11 @@ const Game: FC<GameProps> = ({ word }) => {
   
     return () => {
       clearTimeout(timer)
-      inputRefs.current[inputRefs.current.length - 1].focus() // eslint-disable-line react-hooks/exhaustive-deps
+      const guessArray = getValues(inputList)
+      const nextEmptyInputIndex = guessArray.findIndex((value) => !value)
+      inputRefsList[nextEmptyInputIndex]?.focus()
     }
-  }, [showMessage])
+  }, [showMessage, inputList])
 
   const updateValue = (newValue: string, index: number) => {
     const pattern = new RegExp(/^[ña-zÑA-Z]*$/g)
@@ -121,13 +123,32 @@ const Game: FC<GameProps> = ({ word }) => {
     }
   }
 
-  const handleOnKeyUp = (key: string, index: number) => {
+  const checkInputsAndSubmit = () => {
+    const allInputsAreFilled = inputRefs.current.every(({ value }) => value)
+
+    if (allInputsAreFilled) {
+      const guessWord = getValues(inputList).join('')
+
+      checkWord(guessWord)
+    } else {
+      setShowMessage(true)
+    }
+  }
+
+  const handleOnKeyDown = (key: string, index: number) => {
     if (key === 'Backspace') {
-      if (index === inputList.length - 1 && inputList[index].value) {
+      const guessArray = getValues(inputList)
+      const nextEmptyInputIndex = guessArray.findIndex((value) => !value)
+
+      if (nextEmptyInputIndex === -1) {
         updateValue('', index)
       } else if (index !== 0) {
         updateValue('', index - 1)
       }
+    }
+
+    if (key === 'Enter') {
+      checkInputsAndSubmit()
     }
   }
 
@@ -136,8 +157,9 @@ const Game: FC<GameProps> = ({ word }) => {
       key={nanoid()}
       value={letter.value}
       onChange={({ target: { value: newValue } }) => updateValue(newValue, index)}
-      onKeyUp={({ key }) => handleOnKeyUp(key, index)}
-      ref={(input: HTMLInputElement) => {
+      onKeyDown={({ key }) => handleOnKeyDown(key, index)}
+      maxLength={1}
+      ref={(input) => {
         if (input) inputRefs.current[index] = input
       }}
     />
@@ -161,7 +183,7 @@ const Game: FC<GameProps> = ({ word }) => {
           <div>{renderInputList}</div>
           <Button
             text={SUBMIT_BTN_TEXT}
-            onClick={() => checkWord}
+            onClick={() => checkInputsAndSubmit()}
           />
           {
             showMessage
