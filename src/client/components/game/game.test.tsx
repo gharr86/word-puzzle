@@ -40,6 +40,7 @@ const enterBadGuess = (_screen: Screen) => {
   fireEvent.change(_screen.getAllByRole('textbox')[2], getFakeChangeEvent('j'))
   fireEvent.change(_screen.getAllByRole('textbox')[3], getFakeChangeEvent('a'))
   fireEvent.change(_screen.getAllByRole('textbox')[4], getFakeChangeEvent('r'))
+  fireEvent.keyDown(_screen.getAllByRole('textbox')[4], { key: 'Enter' })
 }
 const enterGoodGuess = (_screen: Screen) => {
   fireEvent.change(_screen.getAllByRole('textbox')[0], getFakeChangeEvent('v'))
@@ -47,6 +48,7 @@ const enterGoodGuess = (_screen: Screen) => {
   fireEvent.change(_screen.getAllByRole('textbox')[2], getFakeChangeEvent('a'))
   fireEvent.change(_screen.getAllByRole('textbox')[3], getFakeChangeEvent('j'))
   fireEvent.change(_screen.getAllByRole('textbox')[4], getFakeChangeEvent('e'))
+  fireEvent.click(_screen.getAllByRole('button')[0])
 }
 
 describe('<Game />', () => {
@@ -81,13 +83,13 @@ describe('<Game />', () => {
     renderGame()
 
     fireEvent.change(screen.getAllByRole('textbox')[0], getFakeChangeEvent('a'))
-    fireEvent.keyUp(screen.getAllByRole('textbox')[1], { key: 'Backspace' })
+    fireEvent.keyDown(screen.getAllByRole('textbox')[1], { key: 'Backspace' })
 
     expect(screen.getAllByRole('textbox')[0]).toHaveValue('')
     expect(screen.getAllByRole('textbox')[0]).toHaveFocus()
   })
 
-  test('when an invalid word is submitted, error message is shown and las input is focused', async () => {
+  test('when an invalid word is submitted, error message is shown', async () => {
     mockApiService.checkWord.mockResolvedValueOnce(getMockResp(false) as AxiosResponse)
     renderGame()
 
